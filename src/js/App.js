@@ -1,8 +1,9 @@
+import React, { Component } from 'react';
 
-
-// function omero_player() {
-
-	console.log("Hello World");
-// }
-
-// export default omero_player;
+export default class App extends Component {
+  render() {
+    return (
+      <h1>Hello, Sarah</h1>
+    );
+  }
+}

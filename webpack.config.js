@@ -5,7 +5,9 @@ var path = require('path');
 module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./js/App.js",
+  entry: [
+    "./js/index",
+  ],
   devServer: {
     inline: true,
     port: 3333
