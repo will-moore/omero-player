@@ -4,10 +4,11 @@
     <title>OMERO.player</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script type="text/javascript" src="{% static "3rdparty/jquery-1.11.1.js" %}"></script>
   </head>
   <body>
     <div id='root'>
     </div>
-    <script src="/bundle.min.js"></script>
+    <script src="{% static 'player/bundle.min.js' %}"></script>
   </body>
 </html>

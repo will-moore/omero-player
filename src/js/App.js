@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PlayerNav from './PlayerNav';
 import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const styles = {
@@ -18,6 +19,13 @@ const styles = {
 }
 
 export default class App extends Component {
+
+    componentDidMount() {
+        
+        axios.get('/webgateway/imgData/3728/').then(function(){
+            console.log(arguments);
+        });
+    }
 
   render() {
     return (

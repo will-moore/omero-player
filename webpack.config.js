@@ -26,7 +26,7 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + "/src/",
+    path: __dirname + "/player/static/player",
     filename: "bundle.min.js"
   },
   plugins: debug ? [] : [
