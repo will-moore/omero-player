@@ -5,7 +5,7 @@ import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
 import axios from 'axios';
 import playerApp from './reducers';
-import {incrementZ, decrementZ} from './actions'
+import {incrementZ, decrementZ, toggleChannel, setChannelColor} from './actions'
 import { createStore } from 'redux';
 
 
@@ -37,8 +37,13 @@ export default class App extends Component {
         )
 
         store.dispatch(incrementZ());
-        store.dispatch(incrementZ());
         store.dispatch(decrementZ());
+
+        store.dispatch(toggleChannel(1));
+        store.dispatch(toggleChannel(2));
+        store.dispatch(toggleChannel(1));
+
+        store.dispatch(setChannelColor(0, 'FFFFFF'));
     }
 
   render() {

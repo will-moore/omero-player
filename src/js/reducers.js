@@ -1,21 +1,59 @@
 
-import {incrementZ, decrementZ, INCREMENT_Z} from './actions';
+import {incrementZ, decrementZ, toggleChannel, TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
+import {setChannelColor, CHANNEL_COLOR} from './actions';
 
+
+// Initial state of the App.
 const initialState = {
-    theZ: 0
+    theZ: 0,
+    channels: [
+        {active: true, color: 'FF0000'},
+        {active: true, color: '00FF00'},
+        {active: true, color: '0000FF'}
+    ]
 }
 
-export default function playerApp(state = initialState, action) {
-    console.log('playerApp', state, action.type, INCREMENT_Z);
+// Handles updating the state of channels for various actions
+function channels(state = [], action) {
+
     switch (action.type) {
-        case INCREMENT_Z:
-            let z = state.theZ;
-            z = z + action.increment;
-            console.log('z', z);
-            return Object.assign({}, state, {
-                theZ: z
+        case TOGGLE_CHANNEL:
+            return state.map((channel, index) => {
+                if (index === action.index) {
+                    return Object.assign({}, channel, {
+                        active: !channel.active
+                    })
+                }
+                return channel;
+            })
+        case CHANNEL_COLOR:
+            return state.map((channel, index) => {
+                if (index === action.index) {
+                    return Object.assign({}, channel, {
+                        color: action.color
+                    })
+                }
+                return channel;
             })
         default:
             return state
+    }
+}
+
+// Our main App reducer. Handles ALL state changes
+export default function playerApp(state = initialState, action) {
+    switch (action.type) {
+        case INCREMENT_Z:
+            return Object.assign({}, state, {
+                theZ: state.theZ + action.increment
+            })
+        // If the action affects channels, handled by channels()
+        case TOGGLE_CHANNEL:
+        case CHANNEL_COLOR:
+            return Object.assign({}, state, {
+                channels: channels(state.channels, action)
+            })
+        default:
+            return state;
     }   
 }
