@@ -4,6 +4,9 @@ import PlayerNav from './PlayerNav';
 import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
 import axios from 'axios';
+import playerApp from './reducers';
+import {incrementZ, decrementZ} from './actions'
+import { createStore } from 'redux';
 
 
 const styles = {
@@ -22,9 +25,20 @@ export default class App extends Component {
 
     componentDidMount() {
         
-        axios.get('/webgateway/imgData/3728/').then(function(){
-            console.log(arguments);
-        });
+        // axios.get('/webgateway/imgData/3728/').then(function(){
+        //     console.log(arguments);
+        // });
+
+        let store = createStore(playerApp);
+        console.log(store.getState());
+
+        let unsubscribe = store.subscribe(() =>
+            console.log('subscribe', store.getState())
+        )
+
+        store.dispatch(incrementZ());
+        store.dispatch(incrementZ());
+        store.dispatch(decrementZ());
     }
 
   render() {

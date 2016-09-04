@@ -1,2 +1,3 @@
 /node_modules/
 .DS_Store
+/player/static/player/bundle.min.js
