@@ -5,7 +5,7 @@ import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
 import axios from 'axios';
 import playerApp from './reducers';
-import {incrementZ, decrementZ, toggleChannel, setChannelColor} from './actions'
+import {incrementZ, decrementZ, toggleChannel, setChannelColor, setImage} from './actions'
 import { createStore } from 'redux';
 
 
@@ -24,10 +24,6 @@ const styles = {
 export default class App extends Component {
 
     componentDidMount() {
-        
-        // axios.get('/webgateway/imgData/3728/').then(function(){
-        //     console.log(arguments);
-        // });
 
         let store = createStore(playerApp);
         console.log(store.getState());
@@ -44,6 +40,17 @@ export default class App extends Component {
         store.dispatch(toggleChannel(1));
 
         store.dispatch(setChannelColor(0, 'FFFFFF'));
+
+
+        axios.get('/webgateway/imgData/3728/').then(function(rsp){
+            console.log(rsp.data);
+            let theT = rsp.data.rdefs.defaultT;
+            let channels = rsp.data.channels.map((channel) => {
+                return {active: channel.active,
+                        color: channel.color}
+            })
+            store.dispatch(setImage(theT, channels));
+        });
     }
 
   render() {

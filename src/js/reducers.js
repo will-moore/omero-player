@@ -1,6 +1,7 @@
 
 import {incrementZ, decrementZ, toggleChannel, TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
 import {setChannelColor, CHANNEL_COLOR} from './actions';
+import {setImage, SET_IMAGE} from './actions';
 
 
 // Initial state of the App.
@@ -43,6 +44,11 @@ function channels(state = [], action) {
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
     switch (action.type) {
+        case SET_IMAGE:
+            return {
+                theZ: action.theZ,
+                channels: action.channels
+            }
         case INCREMENT_Z:
             return Object.assign({}, state, {
                 theZ: state.theZ + action.increment
