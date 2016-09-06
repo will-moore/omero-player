@@ -7,11 +7,7 @@ import {setImage, SET_IMAGE} from './actions';
 // Initial state of the App.
 const initialState = {
     theZ: 0,
-    channels: [
-        {active: true, color: 'FF0000'},
-        {active: true, color: '00FF00'},
-        {active: true, color: '0000FF'}
-    ]
+    channels: []
 }
 
 // Handles updating the state of channels for various actions

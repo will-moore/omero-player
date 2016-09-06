@@ -54,12 +54,14 @@ export default class App extends Component {
         axios.get('/webgateway/imgData/3728/').then(function(rsp){
             console.log(rsp.data);
             let theT = rsp.data.rdefs.defaultT;
+            let theZ = rsp.data.rdefs.defaultZ;
             let channels = rsp.data.channels.map((channel, idx) => {
                 return {active: channel.active,
                         color: channel.color,
+                        label: channel.label,
                         id: idx}
             })
-            store.dispatch(setImage(theT, channels));
+            store.dispatch(setImage(theZ, channels));
         });
     }
 
