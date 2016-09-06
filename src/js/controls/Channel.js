@@ -4,14 +4,15 @@ import { Button } from 'react-bootstrap';
 
 const Channel = ({ onClick, active, color, label }) => (
   <div
-    onClick={onClick}
     style={{
       textDecoration: active ? 'line-through' : 'none',
     }}
   >
     <Button
+      onClick={onClick}
       bsSize="small"
       style={{
+      'outline': '0',
       'backgroundColor': '#' + color,
       'opacity': active ? '1' : '0.5',
     }}

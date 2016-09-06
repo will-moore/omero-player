@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-// import { Button } from 'react-bootstrap';
 import PlayerNav from './PlayerNav';
 import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
-import axios from 'axios';
-import playerApp from './reducers';
 import {incrementZ, decrementZ, toggleChannel, setChannelColor, setImage} from './actions'
-import { createStore } from 'redux';
-import ChannelList from './controls/ChannelList'
+import ChannelListContainer from './controls/ChannelListContainer'
 
 
 const styles = {
@@ -32,38 +28,6 @@ export default class App extends Component {
         console.log('constructor', this, this.state);
     }
 
-    componentDidMount() {
-
-        let store = createStore(playerApp);
-        console.log(store.getState());
-
-        let unsubscribe = store.subscribe(() => {
-            console.log('subscribe', store.getState())
-            this.setState({'channels': store.getState().channels});
-        })
-
-        // store.dispatch(incrementZ());
-        // store.dispatch(decrementZ());
-
-        // store.dispatch(toggleChannel(1));
-        // store.dispatch(toggleChannel(2));
-        // store.dispatch(toggleChannel(1));
-
-        // store.dispatch(setChannelColor(0, 'FFFFFF'));
-
-        axios.get('/webgateway/imgData/3728/').then(function(rsp){
-            console.log(rsp.data);
-            let theT = rsp.data.rdefs.defaultT;
-            let theZ = rsp.data.rdefs.defaultZ;
-            let channels = rsp.data.channels.map((channel, idx) => {
-                return {active: channel.active,
-                        color: channel.color,
-                        label: channel.label,
-                        id: idx}
-            })
-            store.dispatch(setImage(theZ, channels));
-        });
-    }
 
     handleChannelClick() {
         console.log('handleChannelClick', arguments);
@@ -81,10 +45,7 @@ export default class App extends Component {
                     <div style={styles.modalBody} className='modal-body'>
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                             <Tab eventKey={1} title="Tab 1">
-                                <ChannelList
-                                    channels={this.state.channels}
-                                    onChannelClick={this.handleChannelClick}>
-                                </ChannelList>
+                                <ChannelListContainer />
                             </Tab>
                             <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
                             <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>
