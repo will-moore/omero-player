@@ -29,9 +29,6 @@ export default class App extends Component {
     }
 
 
-    handleChannelClick() {
-        console.log('handleChannelClick', arguments);
-    }
 
   render() {
     console.log('render', this.state, this.state.channels);

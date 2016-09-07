@@ -1,17 +1,18 @@
 
-import {incrementZ, decrementZ, toggleChannel, TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
-import {setChannelColor, CHANNEL_COLOR} from './actions';
-import {setImage, SET_IMAGE} from './actions';
+import {TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
+import {CHANNEL_COLOR} from './actions';
+import {REQUEST_IMAGE, RECEIVE_IMAGE} from './actions';
 
 
 // Initial state of the App.
 const initialState = {
+    isFetching: false,
     theZ: 0,
     channels: []
 }
 
 // Handles updating the state of channels for various actions
-function channels(state = [], action) {
+function updateChannels(state = [], action) {
 
     switch (action.type) {
         case TOGGLE_CHANNEL:
@@ -40,11 +41,23 @@ function channels(state = [], action) {
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
     switch (action.type) {
-        case SET_IMAGE:
-            return {
-                theZ: action.theZ,
-                channels: action.channels
-            }
+        case REQUEST_IMAGE:
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        case RECEIVE_IMAGE:
+            let json = action.json;
+            let channels = json.channels.map((channel, idx) => {
+                    return {active: channel.active,
+                        color: channel.color,
+                        label: channel.label,
+                        id: idx}
+                })
+            return Object.assign({}, state, {
+                isFetching: false,
+                theZ: json.rdefs.defaultZ,
+                channels
+            })
         case INCREMENT_Z:
             return Object.assign({}, state, {
                 theZ: state.theZ + action.increment
@@ -53,7 +66,7 @@ export default function playerApp(state = initialState, action) {
         case TOGGLE_CHANNEL:
         case CHANNEL_COLOR:
             return Object.assign({}, state, {
-                channels: channels(state.channels, action)
+                channels: updateChannels(state.channels, action)
             })
         default:
             return state;

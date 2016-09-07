@@ -1,31 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { createStore } from 'redux';
-import axios from 'axios';
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux';
 import playerApp from './reducers';
 import { Provider } from 'react-redux';
-import { setImage } from './actions'
+import { fetchImage } from './actions'
 
+const loggerMiddleware = createLogger()
 
-let store = createStore(playerApp);
+let store = createStore(
+                playerApp,
+                applyMiddleware(
+                    thunkMiddleware, // lets us dispatch() functions
+                    loggerMiddleware // neat middleware that logs actions
+                )
+            );
 
 // store.subscribe(() => {
 //     console.log('subscribe', store.getState())
 // })
 
-axios.get('/webgateway/imgData/3728/').then(function(rsp){
-    console.log(rsp.data);
-    let theT = rsp.data.rdefs.defaultT;
-    let theZ = rsp.data.rdefs.defaultZ;
-    let channels = rsp.data.channels.map((channel, idx) => {
-        return {active: channel.active,
-                color: channel.color,
-                label: channel.label,
-                id: idx}
-    })
-    store.dispatch(setImage(theZ, channels));
-});
+store.dispatch(fetchImage(3728));
 
 
 ReactDOM.render(<Provider store={store}>
