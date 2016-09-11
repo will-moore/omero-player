@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import ChannelList from './ChannelList'
-import {toggleChannel } from '../actions'
+import {toggleChannel, fetchImage } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -11,10 +11,17 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log('ownProps', ownProps);
   return {
     onChannelClick: (idx) => {
       dispatch(toggleChannel(idx))
-    }
+    },
+
+    fetchImage: (imageId) => {
+      dispatch(fetchImage(imageId))
+    },
+
+    imageId: ownProps.imageId
   }
 }
 

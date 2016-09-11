@@ -5,6 +5,7 @@ import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
 import {incrementZ, decrementZ, toggleChannel, setChannelColor, setImage} from './actions'
 import ChannelListContainer from './controls/ChannelListContainer'
+import { fetchImage } from './actions'
 
 
 const styles = {
@@ -32,6 +33,11 @@ export default class App extends Component {
     }
 
 
+    // componentDidMount () {
+        // console.log('this.context.redux', this.props.dispatch);
+        // this.context.redux.dispatch(fetchImage(3732));
+      // }
+
 
   render() {
     console.log(this.props.params);
@@ -46,7 +52,9 @@ export default class App extends Component {
                     <div style={styles.modalBody} className='modal-body'>
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                             <Tab eventKey={1} title={'Image:' + iid}>
-                                <ChannelListContainer />
+                                <ChannelListContainer
+                                    imageId={iid}
+                                />
                             </Tab>
                             <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
                             <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>

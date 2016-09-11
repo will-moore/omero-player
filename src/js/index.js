@@ -23,7 +23,7 @@ let store = createStore(
 //     console.log('subscribe', store.getState())
 // })
 
-store.dispatch(fetchImage(3732));
+// store.dispatch(fetchImage(3732));
 
 
 ReactDOM.render(<Provider store={store}>
