@@ -1,4 +1,5 @@
 import React from 'react';
+import { Router, Route, browserHistory } from 'react-router';
 import ReactDOM from 'react-dom';
 import App from './App';
 import thunkMiddleware from 'redux-thunk'
@@ -22,11 +23,13 @@ let store = createStore(
 //     console.log('subscribe', store.getState())
 // })
 
-store.dispatch(fetchImage(3728));
+store.dispatch(fetchImage(3732));
 
 
 ReactDOM.render(<Provider store={store}>
-    <App />
+    <Router history={browserHistory}>
+      <Route path="/player/image/(:imageId)/" component={App} />
+    </Router>
   </Provider>,
   document.getElementById('root'));
 // ReactDOM.render(<App />, document.getElementById('root'));

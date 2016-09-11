@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import PlayerNav from './PlayerNav';
 import PlayerDialog from './PlayerDialog';
 import { Tabs, Tab } from 'react-bootstrap';
@@ -20,8 +21,10 @@ const styles = {
 
 export default class App extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor(props, test, that) {
+        console.log('App Constructor', arguments);
+        super(props, test, that);
+        console.log('props.params', props.params);
         this.state = {
             channels: []
         };
@@ -31,17 +34,18 @@ export default class App extends Component {
 
 
   render() {
-    console.log('render', this.state, this.state.channels);
+    console.log(this.props.params);
+    var iid = this.props.params.imageId;
     return (
         <div>
             <PlayerNav></PlayerNav>
-            <div>Content</div>
+            <div>{ this.props.params.imageId } - { iid }</div>
             <PlayerDialog/>
             <div style={styles.dialog} className='modal-dialog'>
                 <div className='modal-content'>
                     <div style={styles.modalBody} className='modal-body'>
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title="Tab 1">
+                            <Tab eventKey={1} title={'Image:' + iid}>
                                 <ChannelListContainer />
                             </Tab>
                             <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
@@ -55,5 +59,5 @@ export default class App extends Component {
             </div>
         </div>
     );
-  }
+  };
 }
