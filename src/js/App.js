@@ -6,6 +6,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import {incrementZ, decrementZ, toggleChannel, setChannelColor, setImage} from './actions'
 import ChannelListContainer from './controls/ChannelListContainer'
 import { fetchImage } from './actions'
+import ImageLink from './ImageLink';
 
 
 const styles = {
@@ -20,52 +21,41 @@ const styles = {
     }
 }
 
-export default class App extends Component {
-
-    constructor(props, test, that) {
-        console.log('App Constructor', arguments);
-        super(props, test, that);
-        console.log('props.params', props.params);
-        this.state = {
-            channels: []
-        };
-        console.log('constructor', this, this.state);
-    }
-
-
-    // componentDidMount () {
-        // console.log('this.context.redux', this.props.dispatch);
-        // this.context.redux.dispatch(fetchImage(3732));
-      // }
-
-
-  render() {
-    console.log(this.props.params);
-    var iid = this.props.params.imageId;
-    return (
+// Pure functional component is single render() function
+// passed the props via de-structuring
+// We only want props.params so...
+const App = ({ params }) => (
+    <div>
+        <PlayerNav></PlayerNav>
         <div>
-            <PlayerNav></PlayerNav>
-            <div>{ this.props.params.imageId } - { iid }</div>
-            <PlayerDialog/>
-            <div style={styles.dialog} className='modal-dialog'>
-                <div className='modal-content'>
-                    <div style={styles.modalBody} className='modal-body'>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab eventKey={1} title={'Image:' + iid}>
-                                <ChannelListContainer
-                                    imageId={iid}
-                                />
-                            </Tab>
-                            <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
-                            <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>
-                        </Tabs>
-                    </div>
-                    <div className='modal-footer'>
-                        Footer
-                    </div>
+            <ImageLink imageId="4420">
+                Image 4420
+            </ImageLink>
+            |
+            <ImageLink imageId="3731">
+                Image 3731
+            </ImageLink>
+        </div>
+        <PlayerDialog/>
+        <div style={styles.dialog} className='modal-dialog'>
+            <div className='modal-content'>
+                <div style={styles.modalBody} className='modal-body'>
+                    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                        <Tab eventKey={1} title={'Image:' + params.imageId}>
+                            <ChannelListContainer
+                                imageId={params.imageId}
+                            />
+                        </Tab>
+                        <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
+                        <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>
+                    </Tabs>
+                </div>
+                <div className='modal-footer'>
+                    Footer
                 </div>
             </div>
         </div>
-    );
-  };
-}
+    </div>
+);
+
+export default App

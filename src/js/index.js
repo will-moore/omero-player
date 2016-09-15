@@ -26,10 +26,11 @@ let store = createStore(
 // store.dispatch(fetchImage(3732));
 
 
-ReactDOM.render(<Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/player/image/(:imageId)/" component={App} />
-    </Router>
-  </Provider>,
+ReactDOM.render(
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/player/image/(:imageId)/" component={App} />
+        </Router>
+    </Provider>,
   document.getElementById('root'));
 // ReactDOM.render(<App />, document.getElementById('root'));

@@ -9,13 +9,17 @@ class ChannelList extends Component{
     console.log('this.props.fetchImage', this.props.fetchImage);
   }
 
+  // We are the first child of ChannelListContainer which connect() to store
+  // and defines a fetchImage() function as prop.
+  // So we can call it from here when the page loads.
+  // This will fetch data, populate the store and cause this Component to be re-rendered.
   componentDidMount() {
-    console.log('this.props.imageId', this.props.imageId);
+    console.log('ChannelLIst componentDidMount() this.props.imageId', this.props.imageId);
     this.props.fetchImage(this.props.imageId);
   }
 
   render() {
-    var channels = this.props.channels;
+    let channels = this.props.channels;
     var onChannelClick = this.props.onChannelClick;
     return (
         <div
