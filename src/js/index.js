@@ -8,8 +8,6 @@ import { createStore, applyMiddleware } from 'redux';
 import playerApp from './reducers';
 import { Provider } from 'react-redux';
 import { fetchImage } from './actions'
-import { syncHistoryWithStore } from 'react-router-redux'
-
 
 const loggerMiddleware = createLogger()
 
@@ -27,13 +25,10 @@ let store = createStore(
 
 // store.dispatch(fetchImage(3732));
 
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store)
-
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history}>
+        <Router history={browserHistory}>
             <Route path="/player/image/(:imageId)/" component={App} />
         </Router>
     </Provider>,
