@@ -2,6 +2,7 @@
 import {TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
 import {CHANNEL_COLOR} from './actions';
 import {REQUEST_IMAGE, RECEIVE_IMAGE} from './actions';
+import { routerReducer } from 'react-router-redux'
 
 
 // Initial state of the App.
@@ -40,6 +41,9 @@ function updateChannels(state = [], action) {
 
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
+
+    state.routing = routerReducer(state.routing, action)       // keep track of route
+
     switch (action.type) {
         case REQUEST_IMAGE:
             return Object.assign({}, state, {
