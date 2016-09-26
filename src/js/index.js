@@ -12,20 +12,14 @@ import { fetchImage } from './actions'
 const loggerMiddleware = createLogger()
 
 let store = createStore(
-                playerApp,
-                applyMiddleware(
-                    thunkMiddleware, // lets us dispatch() functions
-                    loggerMiddleware // neat middleware that logs actions
-                )
-            );
+    playerApp,
+    applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        loggerMiddleware // neat middleware that logs actions
+    )
+);
 
-// store.subscribe(() => {
-//     console.log('subscribe', store.getState())
-// })
-
-// store.dispatch(fetchImage(3732));
-
-
+// We pass imageId as a prop of App component
 ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>
@@ -33,4 +27,3 @@ ReactDOM.render(
         </Router>
     </Provider>,
   document.getElementById('root'));
-// ReactDOM.render(<App />, document.getElementById('root'));

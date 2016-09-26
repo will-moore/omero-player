@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, ButtonToolbar } from 'react-bootstrap';
+import Spinner from './controls/Spinner'
 
 export default class PlayerNav extends Component {
 
@@ -10,6 +11,7 @@ export default class PlayerNav extends Component {
   render() {
     return (
       <Navbar inverse>
+        <Spinner></Spinner>
         <Navbar.Header>
          <Navbar.Brand>
             <a href="#">OMERO.player</a>

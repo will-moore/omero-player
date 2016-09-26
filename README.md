@@ -3,4 +3,8 @@
 $ cd omero_player
 $ npm install
 
-$ npm run start
+
+# To generate static/player/bundle.min.js for Django app,
+# and watch for changes:
+
+$ npm run dev
