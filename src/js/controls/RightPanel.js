@@ -16,6 +16,8 @@ const styles = {
     }
 }
 
+// We have imageId from url params - Pass down to
+// ChannelListContainer so ChannelList can call fetchImage(imageId)
 const RightPanel = ({ imageId }) => (
 
 	<div style={styles.dialog} className='modal-dialog'>
