@@ -6,7 +6,7 @@ export default class PlayerNav extends Component {
 
   render() {
     return (
-      <Navbar inverse>
+      <Navbar inverse style={{marginBottom: 0, borderRadius: 0}} >
         <Spinner></Spinner>
         <Navbar.Header>
          <Navbar.Brand>
