@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PlayerNav from './PlayerNav';
 import RightPanel from './controls/RightPanel'
-import ImageCanvas from './canvas/ImageCanvas'
+import ImageCanvasContainer from './canvas/ImageCanvasContainer'
 
 // Pure functional component is single render() function
 // passed the props via de-structuring
@@ -9,7 +9,7 @@ import ImageCanvas from './canvas/ImageCanvas'
 const App = ({ params }) => (
     <div>
         <PlayerNav></PlayerNav>
-        <ImageCanvas></ImageCanvas>
+        <ImageCanvasContainer></ImageCanvasContainer>
         <RightPanel
             imageId = {params.imageId}
         ></RightPanel>
