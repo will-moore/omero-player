@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     // we need channels (obviously!)
     channels: state.channels,
+    imageId: state.imageId,
   }
 }
 

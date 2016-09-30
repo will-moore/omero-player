@@ -56,7 +56,8 @@ export default function playerApp(state = initialState, action) {
             return Object.assign({}, state, {
                 isFetching: false,
                 theZ: json.rdefs.defaultZ,
-                channels
+                channels,
+                imageId: json.id
             })
         case INCREMENT_Z:
             return Object.assign({}, state, {
