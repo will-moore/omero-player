@@ -12,9 +12,11 @@ class ImageCanvas extends React.Component {
         console.log('componentDidUpdate');
         // this.updateCanvas();
         if (this.props.channels.length > 0) {
-            const src = this.getImgSrc();
-            console.log("SRC", src);
-            this.img.src = src;
+            // const src = this.getImgSrc();
+            // console.log("SRC", src);
+            // this.img.src = src;
+            const iid = this.props.imageId;
+            this.props.planeManager.loadPlane(iid, 0, 1, this.props.channels);
         }
     }
 
@@ -32,11 +34,11 @@ class ImageCanvas extends React.Component {
     componentDidMount() {
         // this.PlaneManager = PlaneManager(this.props);
 
-        this.img = new Image();
-        this.img.onload = function() {
-            console.log("LOADED");
-            this.updateCanvas(true);
-        }.bind(this);
+        // this.img = new Image();
+        // this.img.onload = function() {
+        //     console.log("LOADED");
+        //     this.updateCanvas(true);
+        // }.bind(this);
 
 
         // Start listening for window resize events...

@@ -1,14 +1,15 @@
 
 import {TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
 import {CHANNEL_COLOR} from './actions';
-import {REQUEST_IMAGE, RECEIVE_IMAGE} from './actions';
+import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE} from './actions';
 
 
 // Initial state of the App.
 const initialState = {
     isFetching: false,
     theZ: 0,
-    channels: []
+    channels: [],
+    loadedPlanes: [],   // list of ["z,t", ] E.g. "1,0"
 }
 
 // Handles updating the state of channels for various actions
@@ -41,9 +42,18 @@ function updateChannels(state = [], action) {
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
     switch (action.type) {
-        case REQUEST_IMAGE:
+        case START_FETCHING:
             return Object.assign({}, state, {
                 isFetching: true
+            })
+        case RECEIVE_PLANE:
+            const key = `${ action.theZ },${ action.theT }`;
+            return Object.assign({}, state, {
+                isFetching: false,
+                // If key is already in list, return list else return list with key
+                loadedPlanes: state.loadedPlanes.indexOf(key) > -1 ? state.loadedPlanes : [
+                    ...state.loadedPlanes, key
+                ]
             })
         case RECEIVE_IMAGE:
             let json = action.json;

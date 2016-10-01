@@ -7,8 +7,9 @@ export const TOGGLE_CHANNEL = "TOGGLE_CHANNEL";
 export const CHANNEL_COLOR = "CHANNEL_COLOR";
 export const SET_IMAGE = "SET_IMAGE";
 
-export const REQUEST_IMAGE = "REQUEST_IMAGE";
+export const START_FETCHING = "START_FETCHING";
 export const RECEIVE_IMAGE = "RECEIVE_IMAGE";
+export const RECEIVE_PLANE = "RECEIVE_PLANE";
 
 
 export function incrementZ() {
@@ -31,8 +32,12 @@ export function setImage(theZ, channels) {
 	return { type: SET_IMAGE, theZ, channels}
 }
 
-export function requestImage(imageId) {
-	return { type: REQUEST_IMAGE, imageId }
+export function startFetching() {
+	return { type: START_FETCHING }
+}
+
+export function recievePlane(theZ, theT) {
+	return { type: RECEIVE_PLANE, theZ, theT }
 }
 
 export function receiveImage(json) {
@@ -42,7 +47,7 @@ export function receiveImage(json) {
 
 export function fetchImage(imageId) {
 	return function (dispatch) {
-		dispatch(requestImage(imageId))
+		dispatch(startFetching())
 		return axios.get('/webgateway/imgData/' + imageId + '/')
 			.then(response => response.data)
 			.then(json => 
