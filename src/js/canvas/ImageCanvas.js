@@ -20,21 +20,20 @@ class ImageCanvas extends React.Component {
         let img;
         if (this.props.channels.length > 0) {
             // We use a key 'z,t' to check if plane is already loaded...
-            let theT = 0;
-            const key = `${ this.props.theZ },${ theT }`;
+            const key = `${ this.props.theZ },${ this.props.theT }`;
             if (this.props.loadedPlanes.indexOf(key) === -1) {
                 // if plane is not loaded, load it...
-                this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ, theT,
-                                                  this.props.channels);
+                this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ,
+                                                  this.props.theT, this.props.channels);
                 return;
             } else {
                 // ...otherwise, plane is loaded, we can get it and draw on canvas
-                const source = this.props.planeManager.getImgAndCoords(this.props.theZ, theT);
+                const source = this.props.planeManager.getImgAndCoords(this.props.theZ, this.props.theT);
                 if (source) {
                     img = source.img;
                     this.updateCanvas(img);
                 } else {
-                    console.log("NOT FOUND", this.props.theZ, theT);
+                    console.log("NOT FOUND", this.props.theZ, this.props.theT);
                     return;
                 }
             }

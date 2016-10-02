@@ -3,6 +3,7 @@ import PlayerNav from './PlayerNav';
 import RightPanel from './controls/RightPanel'
 import ImageCanvasContainer from './canvas/ImageCanvasContainer'
 import ZPanelContainer from './controls/ZPanelContainer'
+import TPanelContainer from './ztSliders/TPanelContainer'
 
 // Pure functional component is single render() function
 // passed the props via de-structuring
@@ -15,6 +16,7 @@ const App = ({ params }) => (
             imageId = {params.imageId}
         ></RightPanel>
         <ZPanelContainer></ZPanelContainer>
+        <TPanelContainer></TPanelContainer>
     </div>
 );
 

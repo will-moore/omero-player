@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     channels: state.channels,
     imageId: state.imageId,
     theZ: state.theZ,
+    theT: state.theT,
     loadedPlanes: state.loadedPlanes,
   }
 }

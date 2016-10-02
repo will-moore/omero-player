@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch'
 import axios from 'axios';
 
 export const INCREMENT_Z = "INCREMENT_Z";
+export const SET_T = "SET_T";
 export const TOGGLE_CHANNEL = "TOGGLE_CHANNEL";
 export const CHANNEL_COLOR = "CHANNEL_COLOR";
 export const SET_IMAGE = "SET_IMAGE";
@@ -18,6 +19,10 @@ export function incrementZ() {
 
 export function decrementZ() {
 	return { type: INCREMENT_Z, increment: -1};
+}
+
+export function setT(theT, sliding=false) {
+	return { type: SET_T, theT, sliding };
 }
 
 export function toggleChannel(index) {

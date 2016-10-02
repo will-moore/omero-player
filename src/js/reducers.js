@@ -1,13 +1,16 @@
 
 import {TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
 import {CHANNEL_COLOR} from './actions';
-import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE} from './actions';
+import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T} from './actions';
 
 
 // Initial state of the App.
 const initialState = {
     isFetching: false,
     theZ: 0,
+    theT: 0,
+    sizeZ: 1,
+    sizeT: 1,
     channels: [],
     loadedPlanes: [],   // list of ["z,t", ] E.g. "1,0"
 }
@@ -66,12 +69,21 @@ export default function playerApp(state = initialState, action) {
             return Object.assign({}, state, {
                 isFetching: false,
                 theZ: json.rdefs.defaultZ,
+                theT: json.rdefs.defaultT,
+                sizeZ: json.size.z,
+                sizeT: json.size.t,
                 channels,
                 imageId: json.id
             })
         case INCREMENT_Z:
             return Object.assign({}, state, {
                 theZ: state.theZ + action.increment
+            })
+        case SET_T:
+            const theT = Math.max(0, Math.min(action.theT, state.sizeT-1))
+            return Object.assign({}, state, {
+                theT,
+                sliding: action.sliding,
             })
         // If the action affects channels, handled by channels()
         case TOGGLE_CHANNEL:
