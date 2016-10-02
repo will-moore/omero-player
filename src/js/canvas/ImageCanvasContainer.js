@@ -10,6 +10,8 @@ const mapStateToProps = (state, ownProps) => {
     // we need channels (obviously!)
     channels: state.channels,
     imageId: state.imageId,
+    theZ: state.theZ,
+    loadedPlanes: state.loadedPlanes,
   }
 }
 
