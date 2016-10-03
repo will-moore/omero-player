@@ -6,6 +6,7 @@ import { setT } from '../actions'
 const mapStateToProps = (state, ownProps) => {
   return {
     theT: state.theT,
+    sizeT: state.sizeT,
   }
 }
 

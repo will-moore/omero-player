@@ -17,7 +17,7 @@ const styles = {
 
 const ZPanel = ({ incrementZ, decrementZ, theZ }) => (
   <div style={styles.dialog} className='modal-dialog'>
-    Z: {theZ}
+    Z: {theZ + 1}
     <Button
       onClick={incrementZ}
       bsSize="small"

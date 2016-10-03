@@ -7,11 +7,11 @@ import PlaneManager from './PlaneManager'
 // props of child component <ImageCanvas>
 const mapStateToProps = (state, ownProps) => {
   return {
-    // we need channels (obviously!)
     channels: state.channels,
     imageId: state.imageId,
     theZ: state.theZ,
     theT: state.theT,
+    sliding: state.sliding,
     loadedPlanes: state.loadedPlanes,
   }
 }

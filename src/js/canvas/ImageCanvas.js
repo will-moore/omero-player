@@ -23,6 +23,10 @@ class ImageCanvas extends React.Component {
             const key = `${ this.props.theZ },${ this.props.theT }`;
             if (this.props.loadedPlanes.indexOf(key) === -1) {
                 // if plane is not loaded, load it...
+                if (this.props.sliding) {
+                    // but if we're sliding Z/T sliders, don't load plane that's not loaded
+                    return;
+                }
                 this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ,
                                                   this.props.theT, this.props.channels);
                 return;
