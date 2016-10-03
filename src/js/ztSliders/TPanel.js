@@ -5,13 +5,18 @@ import { Button } from 'react-bootstrap';
 
 const styles = {
     dialog: {
-        width: '100px',
+        width: '100%',
         bottom: '15px',
         position: 'absolute',
-        left: '300px',
+        left: '0',
+        marginLeft: '50%',
     },
     modalBody: {
         padding: '0',
+        position: 'relative',
+        width: '400px',
+        left: '-200px',
+        padding: '10px',
     }
 }
 
@@ -36,7 +41,7 @@ class TPanel extends React.Component {
     render () {
       return (
           <div style={styles.dialog} className='modal-dialog'>
-            <div className='modal-content'>
+            <div style={styles.modalBody} className='modal-content'>
               T: {this.props.theT + 1}
               <Button
                 onClick={this.incrementT.bind(this)}
