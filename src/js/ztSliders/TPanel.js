@@ -17,7 +17,13 @@ const styles = {
         width: '400px',
         left: '-200px',
         padding: '10px',
-    }
+        backgroundColor: 'rgba(100,100,100,0.7)',
+    },
+    sliderContainer: {
+        position: 'relative',
+        backgroundColor: '#ddd',
+        borderRadius: '3px',
+    },
 }
 
 class TPanel extends React.Component {
@@ -38,7 +44,20 @@ class TPanel extends React.Component {
       this.props.setT(event.target.value, true);
     }
 
+    getLoadedTPlanes() {
+      let theZ = this.props.theZ;
+      return this.props.loadedPlanes.reduce((prev, zt) => {
+        let [z, t] = zt.split(',');
+        if (z == theZ) {
+          prev.push(parseInt(t));
+        }
+        return prev;
+      }, []);
+    }
+
     render () {
+      let planes = this.getLoadedTPlanes();
+      let offset = 378/this.props.sizeT;
       return (
           <div style={styles.dialog} className='modal-dialog'>
             <div style={styles.modalBody} className='modal-content'>
@@ -52,13 +71,19 @@ class TPanel extends React.Component {
                 bsSize="small"
               >-</Button>
 
-              <input
-                type='range'
-                value={this.props.theT}
-                min='0' max={this.props.sizeT -1}
-                onMouseUp={this.sliderChange.bind(this)}
-                onInput={this.onSlide.bind(this)}
-              ></input>
+              <div style={styles.sliderContainer}>
+                <input
+                  type='range'
+                  value={this.props.theT}
+                  min='0' max={this.props.sizeT -1}
+                  onMouseUp={this.sliderChange.bind(this)}
+                  onInput={this.onSlide.bind(this)}
+                  style={{'backgroundColor': 'transparent'}}
+                ></input>
+                {planes.map((p) => (
+                  <div key={p} className='tSliderBg' style={{ left: p * offset + 'px', width: offset + 'px'}}></div>
+                ))}
+              </div>
             </div>
           </div>
       )

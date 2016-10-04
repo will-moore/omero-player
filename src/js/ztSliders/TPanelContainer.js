@@ -7,6 +7,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     theT: state.theT,
     sizeT: state.sizeT,
+    loadedPlanes: state.loadedPlanes,
+    theZ: state.theZ,
   }
 }
 
