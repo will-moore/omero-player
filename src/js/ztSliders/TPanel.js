@@ -72,17 +72,17 @@ class TPanel extends React.Component {
               >-</Button>
 
               <div style={styles.sliderContainer}>
+                {planes.map((p) => (
+                  <div key={p} className='tSliderBg' style={{ left: p * offset + 'px', width: offset + 'px'}}></div>
+                ))}
                 <input
                   type='range'
                   value={this.props.theT}
                   min='0' max={this.props.sizeT -1}
                   onMouseUp={this.sliderChange.bind(this)}
                   onInput={this.onSlide.bind(this)}
-                  style={{'backgroundColor': 'transparent'}}
+                  style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
                 ></input>
-                {planes.map((p) => (
-                  <div key={p} className='tSliderBg' style={{ left: p * offset + 'px', width: offset + 'px'}}></div>
-                ))}
               </div>
             </div>
           </div>
