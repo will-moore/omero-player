@@ -64,19 +64,8 @@ const TPanel = React.createClass({
       setTimeout(this.nextFrame, 1000);
     },
 
-    getLoadedTPlanes() {
-      let theZ = this.props.theZ;
-      return this.props.loadedPlanes.reduce((prev, zt) => {
-        let [z, t] = zt.split(',');
-        if (z == theZ) {
-          prev.push(parseInt(t));
-        }
-        return prev;
-      }, []);
-    },
-
     render () {
-      let planes = this.getLoadedTPlanes();
+      let planes = this.props.loadedTPlanes;
       let offset = 378/this.props.sizeT;
       let playing
       return (
