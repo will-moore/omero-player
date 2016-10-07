@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
 
 const styles = {
@@ -15,6 +15,7 @@ const styles = {
         padding: '0',
         position: 'relative',
         width: '400px',
+        height: '75px',
         left: '-200px',
         padding: '10px',
         backgroundColor: 'rgba(100,100,100,0.7)',
@@ -23,26 +24,61 @@ const styles = {
         position: 'relative',
         backgroundColor: '#ddd',
         borderRadius: '3px',
+        top: '32px',
+    },
+    btnGroup: {
+        position: 'absolute',
+        left: '132',
+    },
+    btn: {
+      color: '#eee',
+      fontSize: '20px',
+      outline: 'none',
+      padding: '5px 12px',
+      flexGrow: '1',
+    },
+    tlabel: {
+      marginTop: '6px',
+      color: '#eee',
+      position: 'absolute'
     },
 }
 
-class TPanel extends React.Component {
+const TPanel = React.createClass({
+
+    getInitialState() {
+      return {'playing': false}
+    },
 
     incrementT() {
         this.props.setT(this.props.theT + 1);
-    }
+    },
 
     decrementT() {
         this.props.setT(this.props.theT - 1);
-    }
+    },
 
     sliderChange(event) {
       this.props.setT(event.target.value);
-    }
+    },
 
     onSlide(event) {
       this.props.setT(event.target.value, true);
-    }
+    },
+
+    toggleMovie() {
+      this.setState({'playing': !this.state.playing});
+      // timeout to allow state to update
+      setTimeout(this.nextFrame, 0);
+    },
+
+    nextFrame() {
+      if (!this.state.playing) {
+        return;
+      }
+      this.incrementT();
+      setTimeout(this.nextFrame, 1000);
+    },
 
     getLoadedTPlanes() {
       let theZ = this.props.theZ;
@@ -53,23 +89,43 @@ class TPanel extends React.Component {
         }
         return prev;
       }, []);
-    }
+    },
 
     render () {
       let planes = this.getLoadedTPlanes();
       let offset = 378/this.props.sizeT;
+      let playing
       return (
           <div style={styles.dialog} className='modal-dialog'>
             <div style={styles.modalBody} className='modal-content'>
-              T: {this.props.theT + 1}
-              <Button
-                onClick={this.incrementT.bind(this)}
-                bsSize="small"
-              >+</Button>
-              <Button
-                onClick={this.decrementT.bind(this)}
-                bsSize="small"
-              >-</Button>
+              <div style={styles.tlabel} >
+                {this.props.theT + 1} / {this.props.sizeT}
+              </div>
+
+              <ButtonGroup style={styles.btnGroup} >
+                <Button
+                  style={styles.btn}
+                  onClick={this.decrementT}
+                  bsSize="large"
+                  bsStyle="link"
+                ><Glyphicon glyph="backward" /></Button>
+
+                <Button
+                  style={styles.btn}
+                  onClick={this.toggleMovie}
+                  bsSize="large"
+                  bsStyle="link"
+                >
+                {this.state.playing ? <Glyphicon glyph="pause" /> : <Glyphicon glyph="play" />}
+                </Button>
+
+                <Button
+                  style={styles.btn}
+                  onClick={this.incrementT}
+                  bsSize="large"
+                  bsStyle="link"
+                ><Glyphicon glyph="forward" /></Button>
+              </ButtonGroup>
 
               <div style={styles.sliderContainer}>
                 {planes.map((p) => (
@@ -79,8 +135,8 @@ class TPanel extends React.Component {
                   type='range'
                   value={this.props.theT}
                   min='0' max={this.props.sizeT -1}
-                  onMouseUp={this.sliderChange.bind(this)}
-                  onInput={this.onSlide.bind(this)}
+                  onMouseUp={this.sliderChange}
+                  onInput={this.onSlide}
                   style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
                 ></input>
               </div>
@@ -88,7 +144,7 @@ class TPanel extends React.Component {
           </div>
       )
     }
-}
+})
 
 // TPanel.propTypes = {
 //   onClick: PropTypes.func.isRequired,
