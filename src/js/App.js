@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PlayerNav from './PlayerNav';
 import RightPanel from './controls/RightPanel'
 import ImageCanvasContainer from './canvas/ImageCanvasContainer'
-import ZPanelContainer from './controls/ZPanelContainer'
+import ZPanelContainer from './ztSliders/ZPanelContainer'
 import TPanelContainer from './ztSliders/TPanelContainer'
 
 // Pure functional component is single render() function

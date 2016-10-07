@@ -1,5 +1,5 @@
 
-import {TOGGLE_CHANNEL, INCREMENT_Z} from './actions';
+import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
 import {CHANNEL_COLOR} from './actions';
 import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T} from './actions';
 
@@ -78,6 +78,10 @@ export default function playerApp(state = initialState, action) {
         case INCREMENT_Z:
             return Object.assign({}, state, {
                 theZ: state.theZ + action.increment
+            })
+        case INCREMENT_T:
+            return Object.assign({}, state, {
+                theT: state.theT + action.increment
             })
         case SET_T:
             const theT = Math.max(0, Math.min(action.theT, state.sizeT-1))

@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import TPanel from './TPanel'
-import { setT } from '../actions'
+import { setT, incrementT, decrementT } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -14,7 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const TPanelContainer = connect(
   mapStateToProps,
-  {setT: setT}
+  {setT: setT,
+   incrementT: incrementT,
+   decrementT: decrementT,
+  }
 )(TPanel)
 
 export default TPanelContainer

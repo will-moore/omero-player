@@ -28,7 +28,7 @@ const styles = {
     },
     btnGroup: {
         position: 'absolute',
-        left: '132',
+        left: '132px',
     },
     btn: {
       color: '#eee',
@@ -50,22 +50,6 @@ const TPanel = React.createClass({
       return {'playing': false}
     },
 
-    incrementT() {
-        this.props.setT(this.props.theT + 1);
-    },
-
-    decrementT() {
-        this.props.setT(this.props.theT - 1);
-    },
-
-    sliderChange(event) {
-      this.props.setT(event.target.value);
-    },
-
-    onSlide(event) {
-      this.props.setT(event.target.value, true);
-    },
-
     toggleMovie() {
       this.setState({'playing': !this.state.playing});
       // timeout to allow state to update
@@ -76,7 +60,7 @@ const TPanel = React.createClass({
       if (!this.state.playing) {
         return;
       }
-      this.incrementT();
+      this.props.incrementT();
       setTimeout(this.nextFrame, 1000);
     },
 
@@ -105,7 +89,7 @@ const TPanel = React.createClass({
               <ButtonGroup style={styles.btnGroup} >
                 <Button
                   style={styles.btn}
-                  onClick={this.decrementT}
+                  onClick={this.props.decrementT}
                   bsSize="large"
                   bsStyle="link"
                 ><Glyphicon glyph="backward" /></Button>
@@ -121,7 +105,7 @@ const TPanel = React.createClass({
 
                 <Button
                   style={styles.btn}
-                  onClick={this.incrementT}
+                  onClick={this.props.incrementT}
                   bsSize="large"
                   bsStyle="link"
                 ><Glyphicon glyph="forward" /></Button>
@@ -135,8 +119,8 @@ const TPanel = React.createClass({
                   type='range'
                   value={this.props.theT}
                   min='0' max={this.props.sizeT -1}
-                  onMouseUp={this.sliderChange}
-                  onInput={this.onSlide}
+                  onMouseUp={(event) => {this.props.setT(event.target.value)}}
+                  onInput={(event) => {this.props.setT(event.target.value, true)}}
                   style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
                 ></input>
               </div>
