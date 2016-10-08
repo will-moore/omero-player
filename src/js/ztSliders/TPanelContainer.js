@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import TPanel from './TPanel'
-import { setT, incrementT, decrementT } from '../actions'
+import { setT, incrementT, decrementT, toggleMovie } from '../actions'
 
 
 const getLoadedTPlanes = (theZ, loadedPlanes) => {
@@ -21,6 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     theT: state.theT,
     sizeT: state.sizeT,
     loadedTPlanes: getLoadedTPlanes(state.theZ, state.loadedPlanes),
+    isPlayingMovie: state.isPlayingMovie,
     theZ: state.theZ,
   }
 }
@@ -30,6 +31,7 @@ const TPanelContainer = connect(
   {setT: setT,
    incrementT: incrementT,
    decrementT: decrementT,
+   toggleMovie: toggleMovie,
   }
 )(TPanel)
 

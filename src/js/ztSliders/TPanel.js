@@ -51,13 +51,13 @@ const TPanel = React.createClass({
     },
 
     toggleMovie() {
-      this.setState({'playing': !this.state.playing});
+      this.props.toggleMovie();
       // timeout to allow state to update
       setTimeout(this.nextFrame, 0);
     },
 
     nextFrame() {
-      if (!this.state.playing) {
+      if (!this.props.isPlayingMovie) {
         return;
       }
       this.props.incrementT();
@@ -89,7 +89,7 @@ const TPanel = React.createClass({
                   bsSize="large"
                   bsStyle="link"
                 >
-                {this.state.playing ? <Glyphicon glyph="pause" /> : <Glyphicon glyph="play" />}
+                {this.props.isPlayingMovie ? <Glyphicon glyph="pause" /> : <Glyphicon glyph="play" />}
                 </Button>
 
                 <Button

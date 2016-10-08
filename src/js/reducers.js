@@ -1,12 +1,13 @@
 
 import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
-import {CHANNEL_COLOR} from './actions';
+import {CHANNEL_COLOR, TOGGLE_MOVIE} from './actions';
 import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T} from './actions';
-
+import {incrementT} from './actions';
 
 // Initial state of the App.
 const initialState = {
     isFetching: false,
+    isPlayingMovie: false,
     theZ: 0,
     theT: 0,
     sizeZ: 1,
@@ -89,6 +90,10 @@ export default function playerApp(state = initialState, action) {
                 theT,
                 sliding: action.sliding,
             })
+        case TOGGLE_MOVIE:
+            return Object.assign({}, state, {
+                isPlayingMovie: !state.isPlayingMovie
+            }) 
         // If the action affects channels, handled by channels()
         case TOGGLE_CHANNEL:
         case CHANNEL_COLOR:

@@ -5,6 +5,7 @@ import axios from 'axios';
 export const INCREMENT_Z = "INCREMENT_Z";
 export const INCREMENT_T = "INCREMENT_T";
 export const SET_T = "SET_T";
+export const TOGGLE_MOVIE = "TOGGLE_MOVIE";
 export const TOGGLE_CHANNEL = "TOGGLE_CHANNEL";
 export const CHANNEL_COLOR = "CHANNEL_COLOR";
 export const SET_IMAGE = "SET_IMAGE";
@@ -13,6 +14,9 @@ export const START_FETCHING = "START_FETCHING";
 export const RECEIVE_IMAGE = "RECEIVE_IMAGE";
 export const RECEIVE_PLANE = "RECEIVE_PLANE";
 
+export function toggleMovie() {
+	return { type: TOGGLE_MOVIE };
+}
 
 export function incrementZ() {
 	return { type: INCREMENT_Z, increment: 1};
