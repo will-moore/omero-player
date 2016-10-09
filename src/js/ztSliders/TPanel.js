@@ -67,7 +67,6 @@ const TPanel = React.createClass({
     render () {
       let planes = this.props.loadedTPlanes;
       let offset = 378/this.props.sizeT;
-      let playing
       return (
           <div style={styles.dialog} className='modal-dialog'>
             <div style={styles.modalBody} className='modal-content'>
