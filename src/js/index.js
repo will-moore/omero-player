@@ -25,4 +25,6 @@ ReactDOM.render(
         <Router history={browserHistory}>
             <Route path="/player/image/(:imageId)/" component={App} />
         </Router>
-    </Provider>, document.getElementById('root'));
+    </Provider>,
+    document.getElementById('root')
+);

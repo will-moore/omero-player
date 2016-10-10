@@ -6,7 +6,8 @@ import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 const styles = {
     dialog: {
         width: '100%',
-        bottom: '15px',
+        height: 400,
+        top: '50%',
         position: 'absolute',
         left: '0',
         marginLeft: '200px',
@@ -14,9 +15,10 @@ const styles = {
     modalBody: {
         padding: '0',
         position: 'relative',
-        width: '400px',
-        height: '75px',
-        left: '-200px',
+        width: 65,
+        height: 400,
+        top: -200,
+        left: 0,
         padding: '10px',
         backgroundColor: 'rgba(100,100,100,0.7)',
     },
@@ -24,31 +26,51 @@ const styles = {
         position: 'relative',
         backgroundColor: '#ddd',
         borderRadius: '3px',
-        top: '32px',
+        top: 32,
+        transform: 'rotate(-90deg)',
+        transformOrigin: 'right',
+        width: 300,
+        top: 20,
+        right: 281,
     },
-    btnGroup: {
-        position: 'absolute',
-        left: '132px',
+    slider: {
+      backgroundColor: 'transparent',
+      position: 'relative',
+      zIndex: 10,
+      opacity: 0.7,
+      width: 300,
     },
     btn: {
       color: '#eee',
       fontSize: '20px',
       outline: 'none',
-      padding: '5px 12px',
+      padding: '0px 9px',
       flexGrow: '1',
+      position: 'absolute',
+      transform: 'rotate(-90deg)',
+      transformOrigin: 'centre',
     },
     tlabel: {
-      marginTop: '6px',
+      marginBottom: 6,
+      marginLeft: -10,
+      width: '100%',
+      textAlign: 'center',
       color: '#eee',
-      position: 'absolute'
+      position: 'absolute',
+      bottom: 0,
     },
 }
+
+const a = Object.assign;
 
 const ZPanel = React.createClass({
 
     render () {
+      if (this.props.sizeZ === 1) {
+        return <span></span>
+      }
       let planes = this.props.loadedZPlanes;
-      let offset = 378/this.props.sizeZ;
+      let offset = styles.sliderContainer.width/this.props.sizeZ;
       return (
           <div style={styles.dialog} className='modal-dialog'>
             <div style={styles.modalBody} className='modal-content'>
@@ -56,9 +78,8 @@ const ZPanel = React.createClass({
                 {this.props.theZ + 1} / {this.props.sizeZ}
               </div>
 
-              <ButtonGroup style={styles.btnGroup} >
                 <Button
-                  style={styles.btn}
+                  style={a({}, styles.btn, {'bottom': 25})}
                   onClick={this.props.decrementZ}
                   bsSize="large"
                   bsStyle="link"
@@ -70,7 +91,6 @@ const ZPanel = React.createClass({
                   bsSize="large"
                   bsStyle="link"
                 ><Glyphicon glyph="forward" /></Button>
-              </ButtonGroup>
 
               <div style={styles.sliderContainer}>
                 {planes.map((p) => (
@@ -82,7 +102,7 @@ const ZPanel = React.createClass({
                   min='0' max={this.props.sizeZ -1}
                   onMouseUp={(event) => {this.props.setZ(event.target.value)}}
                   onInput={(event) => {this.props.setZ(event.target.value, true)}}
-                  style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
+                  style={styles.slider}
                 ></input>
               </div>
             </div>

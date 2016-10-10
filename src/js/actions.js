@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch'
 import axios from 'axios';
 
 export const INCREMENT_Z = "INCREMENT_Z";
+export const SET_Z = "SET_Z";
 export const INCREMENT_T = "INCREMENT_T";
 export const SET_T = "SET_T";
 export const TOGGLE_MOVIE = "TOGGLE_MOVIE";
@@ -24,6 +25,10 @@ export function incrementZ() {
 
 export function decrementZ() {
 	return { type: INCREMENT_Z, increment: -1};
+}
+
+export function setZ(theZ, sliding=false) {
+	return { type: SET_Z, theZ, sliding };
 }
 
 export function incrementT() {

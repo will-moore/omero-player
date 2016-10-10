@@ -1,7 +1,7 @@
 
 import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
 import {CHANNEL_COLOR, TOGGLE_MOVIE} from './actions';
-import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T} from './actions';
+import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T, SET_Z} from './actions';
 import {incrementT} from './actions';
 
 // Initial state of the App.
@@ -45,6 +45,7 @@ function updateChannels(state = [], action) {
 
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
+    let theZ;
     switch (action.type) {
         case START_FETCHING:
             return Object.assign({}, state, {
@@ -77,8 +78,14 @@ export default function playerApp(state = initialState, action) {
                 imageId: json.id
             })
         case INCREMENT_Z:
+            theZ = state.theZ + action.increment;
+            theZ = Math.max(0, Math.min(theZ, state.sizeZ-1))
+            return Object.assign({}, state, {theZ})
+        case SET_Z:
+            theZ = Math.max(0, Math.min(action.theZ, state.sizeZ-1))
             return Object.assign({}, state, {
-                theZ: state.theZ + action.increment
+                theZ,
+                sliding: action.sliding,
             })
         case INCREMENT_T:
             return Object.assign({}, state, {
