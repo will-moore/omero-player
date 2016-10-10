@@ -65,6 +65,9 @@ const TPanel = React.createClass({
     },
 
     render () {
+      if (this.props.sizeT === 1) {
+        return <span></span>
+      }
       let planes = this.props.loadedTPlanes;
       let offset = 378/this.props.sizeT;
       return (
