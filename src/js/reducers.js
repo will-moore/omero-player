@@ -46,6 +46,7 @@ function updateChannels(state = [], action) {
 // Our main App reducer. Handles ALL state changes
 export default function playerApp(state = initialState, action) {
     let theZ;
+    let theT;
     switch (action.type) {
         case START_FETCHING:
             return Object.assign({}, state, {
@@ -88,11 +89,11 @@ export default function playerApp(state = initialState, action) {
                 sliding: action.sliding,
             })
         case INCREMENT_T:
-            return Object.assign({}, state, {
-                theT: state.theT + action.increment
-            })
+            theT = state.theT + action.increment;
+            theT = Math.max(0, Math.min(theT, state.sizeT-1))
+            return Object.assign({}, state, {theT})
         case SET_T:
-            const theT = Math.max(0, Math.min(action.theT, state.sizeT-1))
+            theT = Math.max(0, Math.min(action.theT, state.sizeT-1))
             return Object.assign({}, state, {
                 theT,
                 sliding: action.sliding,

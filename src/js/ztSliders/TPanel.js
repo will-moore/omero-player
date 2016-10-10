@@ -64,6 +64,17 @@ const TPanel = React.createClass({
       setTimeout(this.nextFrame, 1000);
     },
 
+    handleMouseWheel(e) {
+      e.preventDefault();
+      console.log(e.nativeEvent.deltaY);
+      let delta = e.nativeEvent.deltaY;
+      if (delta > 0) {
+        this.props.incrementT();
+      } else if (delta < 0) {
+        this.props.decrementT();
+      }
+    },
+
     render () {
       if (this.props.sizeT === 1) {
         return <span></span>
@@ -72,7 +83,7 @@ const TPanel = React.createClass({
       let offset = 378/this.props.sizeT;
       return (
           <div style={styles.dialog} className='modal-dialog'>
-            <div style={styles.modalBody} className='modal-content'>
+            <div style={styles.modalBody} className='modal-content' onWheel={this.handleMouseWheel} >
               <div style={styles.tlabel} >
                 {this.props.theT + 1} / {this.props.sizeT}
               </div>
