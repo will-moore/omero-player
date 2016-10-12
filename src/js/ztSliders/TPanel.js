@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import TButtons from './TButtons';
 
 
 const styles = {
@@ -26,17 +26,6 @@ const styles = {
         borderRadius: '3px',
         top: '32px',
     },
-    btnGroup: {
-        position: 'absolute',
-        left: '132px',
-    },
-    btn: {
-      color: '#eee',
-      fontSize: '20px',
-      outline: 'none',
-      padding: '5px 12px',
-      flexGrow: '1',
-    },
     tlabel: {
       marginTop: '6px',
       color: '#eee',
@@ -50,7 +39,7 @@ const TPanel = React.createClass({
       return {'playing': false}
     },
 
-    toggleMovie() {
+    togglePlaying() {
       this.props.toggleMovie();
       // timeout to allow state to update
       setTimeout(this.nextFrame, 0);
@@ -88,30 +77,12 @@ const TPanel = React.createClass({
                 {this.props.theT + 1} / {this.props.sizeT}
               </div>
 
-              <ButtonGroup style={styles.btnGroup} >
-                <Button
-                  style={styles.btn}
-                  onClick={this.props.decrementT}
-                  bsSize="large"
-                  bsStyle="link"
-                ><Glyphicon glyph="backward" /></Button>
-
-                <Button
-                  style={styles.btn}
-                  onClick={this.toggleMovie}
-                  bsSize="large"
-                  bsStyle="link"
-                >
-                {this.props.isPlayingMovie ? <Glyphicon glyph="pause" /> : <Glyphicon glyph="play" />}
-                </Button>
-
-                <Button
-                  style={styles.btn}
-                  onClick={this.props.incrementT}
-                  bsSize="large"
-                  bsStyle="link"
-                ><Glyphicon glyph="forward" /></Button>
-              </ButtonGroup>
+              <TButtons
+                incrementT={this.props.incrementT}
+                decrementT={this.props.decrementT}
+                isPlayingMovie={this.props.isPlayingMovie}
+                togglePlay={this.togglePlaying}
+              ></TButtons>
 
               <div style={styles.sliderContainer}>
                 {planes.map((p) => (
