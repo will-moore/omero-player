@@ -101,7 +101,7 @@ const ZPanel = React.createClass({
                   value={this.props.theZ}
                   min='0' max={this.props.sizeZ -1}
                   onMouseUp={(event) => {this.props.setZ(event.target.value)}}
-                  onInput={(event) => {this.props.setZ(event.target.value, true)}}
+                  onChange={(event) => {this.props.setZ(event.target.value, true)}}
                   style={styles.slider}
                 ></input>
               </div>

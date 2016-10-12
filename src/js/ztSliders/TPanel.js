@@ -122,7 +122,7 @@ const TPanel = React.createClass({
                   value={this.props.theT}
                   min='0' max={this.props.sizeT -1}
                   onMouseUp={(event) => {this.props.setT(event.target.value)}}
-                  onInput={(event) => {this.props.setT(event.target.value, true)}}
+                  onChange={(event) => {this.props.setT(event.target.value, true)}}
                   style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
                 ></input>
               </div>
