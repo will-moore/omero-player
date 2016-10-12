@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import TButtons from './TButtons';
-
+import TSlider from './TSlider';
 
 const styles = {
     dialog: {
@@ -19,12 +19,6 @@ const styles = {
         left: '-200px',
         padding: '10px',
         backgroundColor: 'rgba(100,100,100,0.7)',
-    },
-    sliderContainer: {
-        position: 'relative',
-        backgroundColor: '#ddd',
-        borderRadius: '3px',
-        top: '32px',
     },
     tlabel: {
       marginTop: '6px',
@@ -68,8 +62,6 @@ const TPanel = React.createClass({
       if (this.props.sizeT === 1) {
         return <span></span>
       }
-      let planes = this.props.loadedTPlanes;
-      let offset = 378/this.props.sizeT;
       return (
           <div style={styles.dialog} className='modal-dialog'>
             <div style={styles.modalBody} className='modal-content' onWheel={this.handleMouseWheel} >
@@ -84,19 +76,13 @@ const TPanel = React.createClass({
                 togglePlay={this.togglePlaying}
               ></TButtons>
 
-              <div style={styles.sliderContainer}>
-                {planes.map((p) => (
-                  <div key={p} className='tSliderBg' style={{ left: p * offset + 'px', width: offset + 'px'}}></div>
-                ))}
-                <input
-                  type='range'
-                  value={this.props.theT}
-                  min='0' max={this.props.sizeT -1}
-                  onMouseUp={(event) => {this.props.setT(event.target.value)}}
-                  onChange={(event) => {this.props.setT(event.target.value, true)}}
-                  style={{'backgroundColor': 'transparent', 'position': 'relative', 'zIndex': 10, 'opacity': 0.7}}
-                ></input>
-              </div>
+              <TSlider
+                theT={this.props.theT}
+                sizeT={this.props.sizeT}
+                setT={this.props.setT}
+                planes={this.props.loadedTPlanes}
+                offset={378/this.props.sizeT}
+              ></TSlider>
             </div>
           </div>
       )
