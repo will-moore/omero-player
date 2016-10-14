@@ -12,6 +12,8 @@ const initialState = {
     theT: 0,
     sizeZ: 1,
     sizeT: 1,
+    sizeX: 1,
+    sizeY: 1,
     channels: [],
     loadedPlanes: [],   // list of ["z,t", ] E.g. "1,0"
 }
@@ -75,6 +77,8 @@ export default function playerApp(state = initialState, action) {
                 theT: json.rdefs.defaultT,
                 sizeZ: json.size.z,
                 sizeT: json.size.t,
+                sizeX: json.size.width,
+                sizeY: json.size.height,
                 channels,
                 imageId: json.id
             })
