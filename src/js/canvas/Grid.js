@@ -7,20 +7,26 @@ const Grid = ({sizeZ, sizeT, theZ, theT, sizeX, sizeY}) => (
         <div style={{ left: '50%', top: '50%', position: 'absolute', border: 'solid red 1px' }} >
 
             {Array(sizeZ).fill(0).map((i, z) => {
-                return Array(sizeT).fill(0).map((o, t) => (
-                    <div
-                        key={z * sizeT + t}
-                        style={{ width: sizeX, height: sizeY, position: 'absolute',
-                            left: t * sizeX - 256, top: z * sizeY - 256,
-                            border: 'solid black 1px',
-                            transform: 'perspective(500px) translateZ(-200px)'}}
-                    >
+                return (
+                    <div style={{ border: 'solid green 1px', width: sizeX * sizeT, position: 'relative', top: -256, left: -256 }} >
+                        {Array(sizeT).fill(0).map(
+                            (o, t) => (
+                                <div
+                                    key={z * sizeT + t}
+                                    style={{ width: sizeX, height: sizeY,
+                                        top: 0,
+                                        border: 'solid black 1px',
+                                        transform: 'perspective(500px) translateZ(-200px)'}}
+                                >
 
 
-                    {(z * sizeT + t) + "Z:" + z + " T:" + t}
+                                {(z * sizeT + t) + "Z:" + z + " T:" + t}
 
+                                </div>
+                            )
+                        )}
                     </div>
-                ))
+                )
             }
             )}
         </div>
