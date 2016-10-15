@@ -8,15 +8,16 @@ const Grid = ({sizeZ, sizeT, theZ, theT, sizeX, sizeY}) => (
 
             {Array(sizeZ).fill(0).map((i, z) => {
                 return (
-                    <div style={{ border: 'solid green 1px', width: sizeX * sizeT, position: 'relative', top: -256, left: -256 }} >
+                    <div style={{ border: 'solid green 1px', width: sizeX, position: 'relative', top: -256, left: -256 }} >
                         {Array(sizeT).fill(0).map(
                             (o, t) => (
                                 <div
                                     key={z * sizeT + t}
                                     style={{ width: sizeX, height: sizeY,
-                                        top: 0,
+                                        top: 0, float: 'left',
+                                        position: 'absolute',
                                         border: 'solid black 1px',
-                                        transform: 'perspective(500px) translateZ(-200px)'}}
+                                        transform: 'perspective(500px) translateZ(-200px) translate(' + (105 * t) + '%, 0%)'}}
                                 >
 
 
