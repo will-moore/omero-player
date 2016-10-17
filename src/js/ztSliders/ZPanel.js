@@ -5,7 +5,6 @@ import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
 const styles = {
     dialog: {
-        width: '100%',
         height: 0,
         top: '50%',
         position: 'absolute',

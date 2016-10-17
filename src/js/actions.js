@@ -15,6 +15,16 @@ export const START_FETCHING = "START_FETCHING";
 export const RECEIVE_IMAGE = "RECEIVE_IMAGE";
 export const RECEIVE_PLANE = "RECEIVE_PLANE";
 
+export const SET_LAYOUT = "SET_LAYOUT";
+export const Layouts = {
+	FULL_VIEWER: 'FULL_VIEWER',
+	GRID_LAYOUT: 'GRID_LAYOUT',
+}
+
+export function setLayout(layout) {
+	return { type: SET_LAYOUT, layout }
+}
+
 export function toggleMovie() {
 	return { type: TOGGLE_MOVIE };
 }

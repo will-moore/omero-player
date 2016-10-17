@@ -3,6 +3,7 @@ import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
 import {CHANNEL_COLOR, TOGGLE_MOVIE} from './actions';
 import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T, SET_Z} from './actions';
 import {incrementT} from './actions';
+import {SET_LAYOUT, Layouts} from './actions';
 
 // Initial state of the App.
 const initialState = {
@@ -10,12 +11,13 @@ const initialState = {
     isPlayingMovie: false,
     theZ: 0,
     theT: 0,
-    sizeZ: 1,
-    sizeT: 1,
+    sizeZ: 0,
+    sizeT: 0,
     sizeX: 1,
     sizeY: 1,
     channels: [],
     loadedPlanes: [],   // list of ["z,t", ] E.g. "1,0"
+    layout: Layouts.FULL_VIEWER,
 }
 
 // Handles updating the state of channels for various actions
@@ -111,6 +113,10 @@ export default function playerApp(state = initialState, action) {
         case CHANNEL_COLOR:
             return Object.assign({}, state, {
                 channels: updateChannels(state.channels, action)
+            })
+        case SET_LAYOUT:
+            return Object.assign({}, state, {
+                layout: action.layout
             })
         default:
             return state;

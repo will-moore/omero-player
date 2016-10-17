@@ -5,7 +5,6 @@ import TSlider from './TSlider';
 
 const styles = {
     dialog: {
-        width: '100%',
         bottom: '15px',
         position: 'absolute',
         left: '0',

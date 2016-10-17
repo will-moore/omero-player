@@ -1,5 +1,6 @@
 
 import React, { PropTypes } from 'react'
+import { Layouts } from '../actions'
 
 class ImageCanvas extends React.Component {
 
@@ -46,6 +47,8 @@ class ImageCanvas extends React.Component {
 
     updateCanvas(img) {
         const canvas = this.refs.canvas;
+        if (!canvas) return;
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight - 50;
         const ctx = canvas.getContext('2d');
@@ -62,6 +65,10 @@ class ImageCanvas extends React.Component {
     }
 
     render() {
+        console.log(this.props.layout, Layouts.FULL_VIEWER)
+        if (this.props.layout !== Layouts.FULL_VIEWER) {
+            return <span/>
+        }
         return (
             <canvas ref="canvas" width={300} height={300}/>
         );

@@ -6,6 +6,7 @@ import Grid from './Grid'
 // props of child component <Grid>
 const mapStateToProps = (state, ownProps) => {
   return {
+  	layout: state.layout,
     sizeT: state.sizeT,
     sizeZ: state.sizeZ,
     theT: state.theT,

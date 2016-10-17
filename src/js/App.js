@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PlayerNav from './PlayerNav';
+import PlayerNav from './navbar/PlayerNav';
 import RightPanel from './controls/RightPanel'
 import ImageCanvasContainer from './canvas/ImageCanvasContainer'
 import GridContainer from './canvas/GridContainer'
@@ -13,6 +13,7 @@ const App = ({ params }) => (
     <div>
         <PlayerNav></PlayerNav>
         <GridContainer />
+        <ImageCanvasContainer />
         <RightPanel
             imageId = {params.imageId}
         ></RightPanel>

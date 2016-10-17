@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import Spinner from './controls/Spinner'
+import { Navbar, Nav, Button } from 'react-bootstrap';
+import Spinner from '../controls/Spinner'
+import LayoutButtonsContainer from './LayoutButtonsContainer'
 
 export default class PlayerNav extends Component {
 
@@ -18,6 +19,7 @@ export default class PlayerNav extends Component {
           <Nav>
           </Nav>
           <Nav pullRight>
+            <LayoutButtonsContainer />
           </Nav>
         </Navbar.Collapse>
       </Navbar>
