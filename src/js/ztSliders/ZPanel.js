@@ -64,6 +64,16 @@ const a = Object.assign;
 
 const ZPanel = React.createClass({
 
+    handleMouseWheel(e) {
+      e.preventDefault();
+      let delta = e.nativeEvent.deltaY;
+      if (delta > 0) {
+        this.props.incrementZ();
+      } else if (delta < 0) {
+        this.props.decrementZ();
+      }
+    },
+
     render () {
       if (this.props.sizeZ === 1) {
         return <span></span>
@@ -72,7 +82,7 @@ const ZPanel = React.createClass({
       let offset = styles.sliderContainer.width/this.props.sizeZ;
       return (
           <div style={styles.dialog} className='modal-dialog'>
-            <div style={styles.modalBody} className='modal-content'>
+            <div style={styles.modalBody} className='modal-content' onWheel={this.handleMouseWheel}>
               <div style={styles.tlabel} >
                 {this.props.theZ + 1} / {this.props.sizeZ}
               </div>
