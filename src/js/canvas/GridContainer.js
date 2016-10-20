@@ -13,6 +13,8 @@ const mapStateToProps = (state, ownProps) => {
     theZ: state.theZ,
     sizeX: state.sizeX,
     sizeY: state.sizeY,
+    loadedPlanes: state.loadedPlanes,
+    planeManager: ownProps.planeManager,
   }
 }
 

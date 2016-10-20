@@ -5,15 +5,17 @@ import ImageCanvasContainer from './canvas/ImageCanvasContainer'
 import GridContainer from './canvas/GridContainer'
 import ZPanelContainer from './ztSliders/ZPanelContainer'
 import TPanelContainer from './ztSliders/TPanelContainer'
+import { connect } from 'react-redux'
+import PlaneManager from './canvas/PlaneManager'
 
 // Pure functional component is single render() function
 // passed the props via de-structuring
 // We only want props.params so...
-const App = ({ params }) => (
+const App = ({ params, planeManager }) => (
     <div>
         <PlayerNav></PlayerNav>
-        <GridContainer />
-        <ImageCanvasContainer />
+        <GridContainer planeManager={planeManager} />
+        <ImageCanvasContainer planeManager={planeManager} />
         <RightPanel
             imageId = {params.imageId}
         ></RightPanel>
@@ -22,4 +24,20 @@ const App = ({ params }) => (
     </div>
 );
 
-export default App
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    params: ownProps.params,
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    planeManager: PlaneManager(dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

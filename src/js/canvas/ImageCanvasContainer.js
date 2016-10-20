@@ -14,18 +14,12 @@ const mapStateToProps = (state, ownProps) => {
     theT: state.theT,
     sliding: state.sliding,
     loadedPlanes: state.loadedPlanes,
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    planeManager: PlaneManager(dispatch)
+    planeManager: ownProps.planeManager,
   }
 }
 
 const ImageCanvasContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
 )(ImageCanvas)
 
 export default ImageCanvasContainer
