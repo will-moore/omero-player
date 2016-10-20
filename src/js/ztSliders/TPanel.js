@@ -24,12 +24,29 @@ const styles = {
       color: '#eee',
       position: 'absolute'
     },
+    fps: {
+      marginTop: 3,
+      color: '#eee',
+      position: 'absolute',
+      right: 12,
+    },
+    fpsInput: {
+      width: 40,
+      backgroundColor: 'transparent',
+      border: 'solid #999 1px',
+      borderRadius: 3,
+      paddingLeft: 4,
+      outline: 'none',
+      marginRight: 5,
+    },
 }
+
+const m = Object.assign;
 
 const TPanel = React.createClass({
 
     getInitialState() {
-      return {'playing': false}
+      return {'playing': false, 'fps': 1}
     },
 
     togglePlaying() {
@@ -42,8 +59,13 @@ const TPanel = React.createClass({
       if (!this.props.isPlayingMovie) {
         return;
       }
-      this.props.incrementT();
-      setTimeout(this.nextFrame, 1000);
+      if ((this.props.theT + 1) === this.props.sizeT) {
+        this.props.setT(0);
+      } else {
+        this.props.incrementT();
+      }
+      var time = parseInt(1000/this.state.fps, 10);
+      setTimeout(this.nextFrame, time);
     },
 
     handleMouseWheel(e) {
@@ -57,6 +79,10 @@ const TPanel = React.createClass({
       }
     },
 
+    fpsChange(e) {
+      this.setState({'fps': e.nativeEvent.srcElement.valueAsNumber});
+    },
+
     render () {
       if (this.props.sizeT === 1) {
         return <span></span>
@@ -66,6 +92,16 @@ const TPanel = React.createClass({
             <div style={styles.modalBody} className='modal-content' onWheel={this.handleMouseWheel} >
               <div style={styles.tlabel} >
                 {this.props.theT + 1} / {this.props.sizeT}
+              </div>
+
+              <div style={m(styles.fps, {visibility: this.props.isPlayingMovie ? 'visible' : 'hidden'})}>
+                <input style={styles.fpsInput} type='number'
+                  min='0'
+                  max='50'
+                  defaultValue={this.state.fps}
+                  onChange={this.fpsChange}
+                />
+                fps
               </div>
 
               <TButtons
