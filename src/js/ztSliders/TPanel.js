@@ -124,11 +124,4 @@ const TPanel = React.createClass({
     }
 })
 
-// TPanel.propTypes = {
-//   onClick: PropTypes.func.isRequired,
-//   active: PropTypes.bool.isRequired,
-//   color: PropTypes.string.isRequired,
-//   label: PropTypes.string.isRequired
-// }
-
 export default TPanel
