@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import ImageCanvas from './ImageCanvas'
-import PlaneManager from './PlaneManager'
+import PlaneManager from '../pixelData/PlaneManager'
 
 // Define how state from store gets mapped to
 // props of child component <ImageCanvas>

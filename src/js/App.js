@@ -6,7 +6,7 @@ import GridContainer from './canvas/GridContainer'
 import ZPanelContainer from './ztSliders/ZPanelContainer'
 import TPanelContainer from './ztSliders/TPanelContainer'
 import { connect } from 'react-redux'
-import PlaneManager from './canvas/PlaneManager'
+import PlaneManager from './pixelData/PlaneManager'
 
 // Pure functional component is single render() function
 // passed the props via de-structuring
