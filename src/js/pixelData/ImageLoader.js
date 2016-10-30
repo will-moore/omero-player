@@ -14,7 +14,7 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
     };
 
     var getSrcUrl = function() {
-        // var url = baseUrl + 'render_multi_planes/' + imageId + '/?theZ=' + zStart;
+        let url = `/webgateway/render_image/${ imageId }/${ zStart }/${ tStart }/`
         // if (zStop !== zStart) {
         //     url += '-' + zStop;
         // }
@@ -22,9 +22,8 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
         // if (tStart !== tStop) {
         //     url += '-' + tStop;
         // }
-        // url += '&c=' + rdef;
-        // return url;
-        return `/webgateway/render_image/${ imageId }/${ zStart }/${ tStart }/`
+        url += '?c=1$FF0000,2$00FF00,3$0000FF';
+        return url;
     };
 
     this.getStatus = function() {
@@ -49,8 +48,8 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
                 // 'x': offset * sizeX,
                 'x': 0,
                 'y': 0,
-                // 'width': sizeX,
-                // 'height': sizeY,
+                'width': img.width,
+                'height': img.height,
             };
     };
 

@@ -1,6 +1,7 @@
 
 import { startFetching, recievePlane } from '../actions'
 import ImageLoader from './ImageLoader'
+import PlaneCache from './PlaneCache'
 
 // PlaneManager.loadPlane() is called when a Component wants to
 // render a plane.
@@ -10,6 +11,7 @@ import ImageLoader from './ImageLoader'
 const PlaneManager = function(dispatch) {
 
     const imageLoaders = [];
+    const planeCache = PlaneCache();
 
     return {
 
@@ -27,7 +29,9 @@ const PlaneManager = function(dispatch) {
         getImgAndCoords: (theZ, theT) => {
             for (var i=0; i<imageLoaders.length; i++) {
                 if (imageLoaders[i].containsPlane(theZ, theT)) {
-                    return imageLoaders[i].getImgAndCoords(theZ, theT);
+                    let imgCoords = imageLoaders[i].getImgAndCoords(theZ, theT);
+                    imgCoords = planeCache.getImgAndCoords(imgCoords);
+                    return imgCoords;
                 }
             }
         }
