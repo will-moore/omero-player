@@ -15,7 +15,7 @@ const PlaneManager = function(dispatch) {
 
     return {
 
-        loadPlane: (iid, z, t, channels) => {
+        loadPlane: (iid, z, t) => {
             // set 'isFetching' to true...
             dispatch(startFetching());
             // Create a new loader, callback updates the store
@@ -26,10 +26,11 @@ const PlaneManager = function(dispatch) {
             imageLoaders.push(loader);
         },
 
-        getImgAndCoords: (theZ, theT) => {
+        getImgAndCoords: (theZ, theT, channels) => {
             for (var i=0; i<imageLoaders.length; i++) {
                 if (imageLoaders[i].containsPlane(theZ, theT)) {
                     let imgCoords = imageLoaders[i].getImgAndCoords(theZ, theT);
+                    imgCoords.channels = channels;
                     imgCoords = planeCache.getImgAndCoords(imgCoords);
                     return imgCoords;
                 }

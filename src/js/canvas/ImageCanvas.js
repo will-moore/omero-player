@@ -29,11 +29,13 @@ class ImageCanvas extends React.Component {
                     return;
                 }
                 this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ,
-                                                  this.props.theT, this.props.channels);
+                                                  this.props.theT);
                 return;
             } else {
                 // ...otherwise, plane is loaded, we can get it and draw on canvas
-                const source = this.props.planeManager.getImgAndCoords(this.props.theZ, this.props.theT);
+                const source = this.props.planeManager.getImgAndCoords(this.props.theZ,
+                                                                       this.props.theT,
+                                                                       this.props.channels);
                 if (source) {
                     img = source.img;
                     this.updateCanvas(img);

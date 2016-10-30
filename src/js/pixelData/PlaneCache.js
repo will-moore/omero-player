@@ -4,14 +4,21 @@ const PlaneCache = function(dispatch) {
     const imageLoaders = [];
 
     var canvas = document.createElement('canvas');
-	var context = canvas.getContext('2d');
+    var context = canvas.getContext('2d');
 
 
-	const renderPlane = (plane) => {
+    const renderPlane = (plane, channels) => {
 
-		var fRed = function(v) {return 0;},
-            fGreen = function(v) {return v;},
-            fBlue = function(v) {return v;};
+        let fRed = function(c1, c2, c3, c4) {
+                return Math.max(c3, c1);
+            },
+            fGreen = function(c1, c2, c3, c4) {
+                return Math.max(c2, c1);
+            },
+            fBlue = function(c1, c2, c3, c4) {
+                return c1;
+            };
+
         // for each channel, we map plane pixel intensity back to
         // the original raw pixel value, and then map that to
         // the new rendering settings
@@ -35,35 +42,64 @@ const PlaneCache = function(dispatch) {
         //     }
         // });
 
-        var l = plane.data.length / 4;
+        console.log('render...', channels);
+        let l = plane.data.length / 4;
         // ...finally apply functions to every red/green/blue pixel
+        let output = context.createImageData(512, 512);
         for (let i = 0; i < l; i++) {
-            let red = fRed(plane.data[i * 4 + 0]);
+            // console.log('pixel', i);
+            // for each pixel...
+            // for each channel that is active...
+            // convert it to r,g,b
+            // let red = 0, green = 0, blue = 0;
+            // for (let c=0; c<4; c++) {
+            //     if (channels[c] && channels[c].active) {
+            //         // color to rgb
+            //         if (channels[c].color === 'FF0000') {
+            //             red = plane.data[i * 4 + c]
+            //         } else if (channels[c].color === '00FF00') {
+            //             green = plane.data[i * 4 + c]
+            //         } else if (channels[c].color === '0000FF') {
+            //             blue = plane.data[i * 4 + c]
+            //         }
+            //     }
+            // }
+            // output[i * 4] = red;
+            // output[i * 4 + 1] = green;
+            // output[i * 4 + 2] = blue;
+            // output[i * 4 + 3] = plane.data[i * 4 + 3];
+            let c1 = plane.data[i * 4 + 0],
+                c2 = plane.data[i * 4 + 1],
+                c3 = plane.data[i * 4 + 2],
+                c4 = plane.data[i * 4 + 3];
+            let red = fRed(c1, c2, c3);
             plane.data[i * 4 + 0] = red;
-            let green = fGreen(plane.data[i * 4 + 1]);
+            let green = fGreen(c1, c2, c3);
             plane.data[i * 4 + 1] = green;
-            let blue = fBlue(plane.data[i * 4 + 2]);
+            let blue = fBlue(c1, c2, c3);
             plane.data[i * 4 + 2] = blue;
         }
+        // plane.data = output;
+        console.log("...done");
 
         return plane;
-	}
+    }
 
 
     return {
 
-        getImgAndCoords: ( {img, x, y, width, height}) => {
+        getImgAndCoords: ( {img, x, y, width, height, channels}) => {
 
-        	canvas.width = width
-        	canvas.height = height
-        	context.drawImage(img, x, y, img.width, img.height);
+            canvas.width = width
+            canvas.height = height
+            context.drawImage(img, x, y, img.width, img.height);
             var plane = context.getImageData(0, 0, img.width, img.height);
 
-            plane = renderPlane(plane);
+            plane = renderPlane(plane, channels);
             context.putImageData(plane, 0, 0);
 
-        	// get img, read channels, render channels we want in right colours
-        	// put this data on an Image and return that, so it can be applied to canvas.
+            // get img, read channels, render channels we want in right colours
+            // put this data on an Image and return that, so it can be applied to canvas.
             return {'img':canvas,
                 // 'x': offset * sizeX,
                 'x': 0,
