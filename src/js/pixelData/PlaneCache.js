@@ -10,15 +10,41 @@ const PlaneCache = function(dispatch) {
     const renderPlane = (plane, channels) => {
 
         let fRed = function(c1, c2, c3, c4) {
-                return Math.max(c3, c1);
-            },
-            fGreen = function(c1, c2, c3, c4) {
-                return Math.max(c2, c1);
-            },
-            fBlue = function(c1, c2, c3, c4) {
-                return c1;
-            };
+            // which active channels contribute to Red?
+            return 0;
+        }
+        let fGreen = function(c1, c2, c3, c4) {
+            return 0;
+        }
+        let fBlue = function(c1, c2, c3, c4) {
+            return 0;
+        };
 
+
+        // 0, 0, 1, 0
+        let reds = channels.map((ch) => (
+            ch.active ? parseInt(ch.color.slice(0,2), 16)/255 : 0 )
+        )
+        console.log('reds', reds);
+        let chsWithRed = reds.reduce((prev, ch, idx) => {
+            if (ch > 0) {
+                prev.push(idx);
+            }
+            return prev;
+        }, []);
+        console.log('chsWithRed', chsWithRed);
+        // If only a single channel has some red...
+        if (chsWithRed.length === 1) {
+            let activeRedIdx = chsWithRed[0];
+            let redFraction = reds[activeRedIdx];
+            console.log(activeRedIdx, redFraction);
+            fRed = function(...inputsChs) {
+                return inputsChs[activeRedIdx] * redFraction;
+            }
+        } else {
+            // need to combine red from multiple channels
+            
+        }
         // for each channel, we map plane pixel intensity back to
         // the original raw pixel value, and then map that to
         // the new rendering settings
