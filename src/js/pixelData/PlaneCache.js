@@ -7,66 +7,55 @@ const PlaneCache = function(dispatch) {
     var context = canvas.getContext('2d');
 
 
-    const renderPlane = (plane, channels) => {
+    const getColorFunc = (channels, colorIdx) => {
+        // channels is json channels data, colorIdx is 0 (red), 1 (green) or 2 (blue)
 
-        let fRed = function(c1, c2, c3, c4) {
-            // which active channels contribute to Red?
-            return 0;
-        }
-        let fGreen = function(c1, c2, c3, c4) {
-            return 0;
-        }
-        let fBlue = function(c1, c2, c3, c4) {
-            return 0;
-        };
-
-
-        // 0, 0, 1, 0
-        let reds = channels.map((ch) => (
-            ch.active ? parseInt(ch.color.slice(0,2), 16)/255 : 0 )
-        )
-        console.log('reds', reds);
-        let chsWithRed = reds.reduce((prev, ch, idx) => {
+        // for the current color, check how much each channel will contribute
+        // as a fraction of it's intensity.
+        // E.g. channels are ['0000FF', '00FF00', '0000FF'] then
+        // colorFractions for red will be [0, 0, 1.0] 
+        let colorFractions = channels.map((ch) => {
+            let hex = ch.color.slice(colorIdx * 2, (colorIdx + 1) * 2);
+            // If active, calculate fraction of 255
+            return ch.active ? parseInt(hex, 16)/255 : 0
+        })
+        console.log('colorFractions', colorFractions);
+        // Check which channels will contribute to color
+        // because if it's only 1, we can optimise mapping
+        // Return a list of channel indexes
+        let chsWithColor = colorFractions.reduce((prev, ch, idx) => {
             if (ch > 0) {
                 prev.push(idx);
             }
             return prev;
         }, []);
-        console.log('chsWithRed', chsWithRed);
-        // If only a single channel has some red...
-        if (chsWithRed.length === 1) {
-            let activeRedIdx = chsWithRed[0];
-            let redFraction = reds[activeRedIdx];
-            console.log(activeRedIdx, redFraction);
+
+        // default function if no channels 
+        let fRed = () => (0)
+
+        console.log('chsWithColor', chsWithColor);
+        // If only a single channel has some of this color...
+        if (chsWithColor.length === 1) {
+            let activeRedIdx = chsWithColor[0];
+            let redFraction = colorFractions[activeRedIdx];
             fRed = function(...inputsChs) {
                 return inputsChs[activeRedIdx] * redFraction;
             }
-        } else {
+        } else if (chsWithColor.length > 1) {
             // need to combine red from multiple channels
-            
+            fRed = function(...inputChs) {
+                let redValues = inputChs.map((ch, idx) => (colorFractions[idx] * ch))
+                return Math.max(...redValues);
+            }
         }
-        // for each channel, we map plane pixel intensity back to
-        // the original raw pixel value, and then map that to
-        // the new rendering settings
-        // loadedChannels.forEach(function(lc, i){
-        //     var start = lc.window.start,
-        //         end = lc.window.end,
-        //         newStart = channels[i].window.start,
-        //         newEnd = channels[i].window.end,
-        //         color = lc.color;
-        //     if (start !== newStart || end !== newEnd) {
-        //         var f = function(red) {
-        //             // raw pixel value is a value between 0 - 255 where
-        //             // 0 == start and 255 is end
-        //             var raw = ((red/255) * (end - start)) + start;
-        //             return ((raw - newStart) / (newEnd - newStart)) * 255;
-        //         };
-        //         // assign this mapping to the correct function/channel...
-        //         if (color === 'FF0000') {fRed = f;}
-        //         else if (color === '00FF00') {fGreen = f;}
-        //         else if (color === '0000FF') {fBlue = f;}
-        //     }
-        // });
+        return fRed;
+    }
+
+    const renderPlane = (plane, channels) => {
+
+        let fRed = getColorFunc(channels, 0);
+        let fGreen = getColorFunc(channels, 1);
+        let fBlue = getColorFunc(channels, 2);
 
         console.log('render...', channels);
         let l = plane.data.length / 4;
