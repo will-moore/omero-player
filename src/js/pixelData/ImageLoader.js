@@ -14,7 +14,7 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
     };
 
     var getSrcUrl = function() {
-        let url = `/webgateway/render_image/${ imageId }/${ zStart }/${ tStart }/`
+        let url = `/player/render_image/${ imageId }/${ zStart }/${ tStart }/`
         // if (zStop !== zStart) {
         //     url += '-' + zStop;
         // }
@@ -22,7 +22,7 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
         // if (tStart !== tStop) {
         //     url += '-' + tStop;
         // }
-        url += '?c=1$FF0000,2$00FF00,3$0000FF';
+        // url += '?c=1$FF0000,2$00FF00,3$0000FF';
         return url;
     };
 

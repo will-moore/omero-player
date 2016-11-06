@@ -8,12 +8,13 @@ const PlaneCache = function(dispatch) {
 
 
     const getColorFunc = (channels, colorIdx) => {
+        console.log('Color:', colorIdx, channels);
         // channels is json channels data, colorIdx is 0 (red), 1 (green) or 2 (blue)
 
         // for the current color, check how much each channel will contribute
         // as a fraction of it's intensity.
         // E.g. channels are ['0000FF', '00FF00', '0000FF'] then
-        // colorFractions for red will be [0, 0, 1.0] 
+        // colorFractions for red will be [0, 0, 1.0] (3rd channel is 100% red)
         let colorFractions = channels.map((ch) => {
             let hex = ch.color.slice(colorIdx * 2, (colorIdx + 1) * 2);
             // If active, calculate fraction of 255
@@ -38,6 +39,7 @@ const PlaneCache = function(dispatch) {
         if (chsWithColor.length === 1) {
             let activeRedIdx = chsWithColor[0];
             let redFraction = colorFractions[activeRedIdx];
+            console.log(activeRedIdx, redFraction)
             fRed = function(...inputsChs) {
                 return inputsChs[activeRedIdx] * redFraction;
             }
