@@ -89,12 +89,13 @@ const PlaneCache = function(dispatch) {
                 c2 = plane.data[i * 4 + 1],
                 c3 = plane.data[i * 4 + 2],
                 c4 = plane.data[i * 4 + 3];
-            let red = fRed(c1, c2, c3);
+            let red = fRed(c1, c2, c3, c4);
             plane.data[i * 4 + 0] = red;
-            let green = fGreen(c1, c2, c3);
+            let green = fGreen(c1, c2, c3, c4);
             plane.data[i * 4 + 1] = green;
-            let blue = fBlue(c1, c2, c3);
+            let blue = fBlue(c1, c2, c3, c4);
             plane.data[i * 4 + 2] = blue;
+            plane.data[i * 4 + 3] = 255;
         }
         // plane.data = output;
         console.log("...done");
