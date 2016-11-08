@@ -2,7 +2,7 @@
 
 // const ImageLoader = function(imageId, baseUrl, sizeX, sizeY, zStart, zStop, tStart, tStop, callback, rdef) {
 
-const ImageLoader = function(imageId, zStart, tStart, callback) {
+const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
 
     const img = new Image();
 
@@ -13,16 +13,24 @@ const ImageLoader = function(imageId, zStart, tStart, callback) {
         callback("loaded");
     };
 
+    var getQuery = function() {
+        var query = channels.map((ch, idx) => {
+            var w = ch.window;
+            return ch.active ? `${ idx + 1 }|${ w.start }:${ w.end }$${ ch.color }` : `-${ idx + 1 }`
+        });
+        return query.join(',');
+    }
+
     var getSrcUrl = function() {
-        let url = `/player/render_image/${ imageId }/${ zStart }/${ tStart }/`
+        let url = `/webgateway/render_image/${ imageId }/${ zStart }/${ tStart }/`
         // if (zStop !== zStart) {
         //     url += '-' + zStop;
-        // }
+        // }    
         // url += '&theT=' + tStart;
         // if (tStart !== tStop) {
         //     url += '-' + tStop;
         // }
-        // url += '?c=1$FF0000,2$00FF00,3$0000FF';
+        url += '?c=' + getQuery();
         return url;
     };
 

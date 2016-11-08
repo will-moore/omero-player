@@ -71,6 +71,7 @@ export default function playerApp(state = initialState, action) {
                     return {active: channel.active,
                         color: channel.color,
                         label: channel.label,
+                        window: channel.window,
                         id: idx}
                 })
             return Object.assign({}, state, {
@@ -112,6 +113,8 @@ export default function playerApp(state = initialState, action) {
         case TOGGLE_CHANNEL:
         case CHANNEL_COLOR:
             return Object.assign({}, state, {
+                // If rendering has changed, we clear loadedPlanes
+                loadedPlanes: [],
                 channels: updateChannels(state.channels, action)
             })
         case SET_LAYOUT:

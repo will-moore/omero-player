@@ -5,6 +5,11 @@ import { Layouts } from '../actions'
 class ImageCanvas extends React.Component {
 
     componentDidUpdate(nextProps, nextState) {
+        // If we've JUST cleared the store's loadedPlanes, we also need to
+        // clear the planeManager's list of cached images.
+        if (this.props.loadedPlanes.length === 0) {
+            this.props.planeManager.clearPlanes();
+        }
         this.loadOrDrawPlane();
     }
 
@@ -29,13 +34,12 @@ class ImageCanvas extends React.Component {
                     return;
                 }
                 this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ,
-                                                  this.props.theT);
+                                                  this.props.theT, this.props.channels);
                 return;
             } else {
                 // ...otherwise, plane is loaded, we can get it and draw on canvas
                 const source = this.props.planeManager.getImgAndCoords(this.props.theZ,
-                                                                       this.props.theT,
-                                                                       this.props.channels);
+                                                                       this.props.theT);
                 if (source) {
                     img = source.img;
                     this.updateCanvas(img);
