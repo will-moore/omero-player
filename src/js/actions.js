@@ -9,6 +9,7 @@ export const SET_T = "SET_T";
 export const TOGGLE_MOVIE = "TOGGLE_MOVIE";
 export const TOGGLE_CHANNEL = "TOGGLE_CHANNEL";
 export const CHANNEL_COLOR = "CHANNEL_COLOR";
+export const SET_ZOOM = "SET_ZOOM";
 export const SET_IMAGE = "SET_IMAGE";
 
 export const START_FETCHING = "START_FETCHING";
@@ -51,6 +52,10 @@ export function decrementT() {
 
 export function setT(theT, sliding=false) {
 	return { type: SET_T, theT, sliding };
+}
+
+export function setZoom(zoom) {
+	return { type: SET_ZOOM, zoom };
 }
 
 export function toggleChannel(index) {

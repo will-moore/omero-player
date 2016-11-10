@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 import ChannelListContainer from './ChannelListContainer'
+import ZoomSlider from './ZoomSlider'
 
 const styles = {
     dialog: {
@@ -28,6 +29,7 @@ const RightPanel = ({ imageId }) => (
                         <ChannelListContainer
                             imageId={imageId}
                         />
+                        <ZoomSlider></ZoomSlider>
                     </Tab>
                 </Tabs>
             </div>

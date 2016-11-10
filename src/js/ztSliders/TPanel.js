@@ -70,7 +70,6 @@ const TPanel = React.createClass({
 
     handleMouseWheel(e) {
       e.preventDefault();
-      console.log(e.nativeEvent.deltaY);
       let delta = e.nativeEvent.deltaY;
       if (delta > 0) {
         this.props.incrementT();

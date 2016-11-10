@@ -63,11 +63,19 @@ class ImageCanvas extends React.Component {
         ctx.fillStyle = "rgb(150,150,150)";
         ctx.fillRect(0,0, canvas.width, canvas.height);
 
+        let imgWidth = img.width * this.props.zoom/100
+        let imgHeight = img.height * this.props.zoom/100
         if (img) {
-            const xOffset = (canvas.width - img.width) / 2;
-            const yOffset = (canvas.height - img.height) / 2;
-            ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, yOffset, img.width, img.height);
+            const xOffset = (canvas.width - imgWidth) / 2;
+            const yOffset = (canvas.height - imgHeight) / 2;
+            ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, yOffset, imgWidth, imgHeight);
         }
+    }
+
+    handleMouseWheel(e) {
+      e.preventDefault();
+      let delta = e.nativeEvent.deltaY;
+      this.props.setZoom(this.props.zoom + delta);
     }
 
     render() {
@@ -76,7 +84,9 @@ class ImageCanvas extends React.Component {
             return <span/>
         }
         return (
-            <canvas ref="canvas" width={300} height={300}/>
+            <canvas ref="canvas" width={300} height={300}
+                onWheel={this.handleMouseWheel.bind(this)}
+            />
         );
     }
 }

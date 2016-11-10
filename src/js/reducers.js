@@ -3,7 +3,7 @@ import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
 import {CHANNEL_COLOR, TOGGLE_MOVIE} from './actions';
 import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T, SET_Z} from './actions';
 import {incrementT} from './actions';
-import {SET_LAYOUT, Layouts} from './actions';
+import {SET_LAYOUT, SET_ZOOM, Layouts} from './actions';
 
 // Initial state of the App.
 const initialState = {
@@ -15,6 +15,7 @@ const initialState = {
     sizeT: 0,
     sizeX: 1,
     sizeY: 1,
+    zoom: 100,
     channels: [],
     loadedPlanes: [],   // list of ["z,t", ] E.g. "1,0"
     layout: Layouts.FULL_VIEWER,
@@ -104,6 +105,10 @@ export default function playerApp(state = initialState, action) {
             return Object.assign({}, state, {
                 theT,
                 sliding: action.sliding,
+            })
+        case SET_ZOOM:
+            return Object.assign({}, state, {
+                zoom: parseInt(action.zoom, 10)
             })
         case TOGGLE_MOVIE:
             return Object.assign({}, state, {
