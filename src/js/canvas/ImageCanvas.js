@@ -4,6 +4,14 @@ import { Layouts } from '../actions'
 
 class ImageCanvas extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            dx: 0,
+            dy: 0,
+        };
+    }
+
     componentDidUpdate(nextProps, nextState) {
         // If we've JUST cleared the store's loadedPlanes, we also need to
         // clear the planeManager's list of cached images.
@@ -66,8 +74,8 @@ class ImageCanvas extends React.Component {
         let imgWidth = img.width * this.props.zoom/100
         let imgHeight = img.height * this.props.zoom/100
         if (img) {
-            const xOffset = (canvas.width - imgWidth) / 2;
-            const yOffset = (canvas.height - imgHeight) / 2;
+            const xOffset = ((canvas.width - imgWidth) / 2) + this.state.dx;
+            const yOffset = ((canvas.height - imgHeight) / 2) + this.state.dy;
             ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, yOffset, imgWidth, imgHeight);
         }
     }
@@ -78,6 +86,26 @@ class ImageCanvas extends React.Component {
       this.props.setZoom(this.props.zoom + delta);
     }
 
+    // Implement drag behaviour
+    onMouseDown(e) {
+        this.mouseDown = true;
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+    }
+    onMouseUp(e) {
+        this.mouseDown = false;
+    }
+    onMouseMove(e) {
+        if (this.mouseDown) {
+            let dx = e.clientX - this.mouseX;
+            let dy = e.clientY - this.mouseY;
+            this.setState({dx: this.state.dx + dx, dy: this.state.dy + dy});
+            // reset so we can calculate dx and dy next time
+            this.mouseX = e.clientX;
+            this.mouseY = e.clientY;
+        }
+    }
+
     render() {
         console.log(this.props.layout, Layouts.FULL_VIEWER)
         if (this.props.layout !== Layouts.FULL_VIEWER) {
@@ -86,6 +114,9 @@ class ImageCanvas extends React.Component {
         return (
             <canvas ref="canvas" width={300} height={300}
                 onWheel={this.handleMouseWheel.bind(this)}
+                onMouseDown={this.onMouseDown.bind(this)}
+                onMouseUp={this.onMouseUp.bind(this)}
+                onMouseMove={this.onMouseMove.bind(this)}
             />
         );
     }
