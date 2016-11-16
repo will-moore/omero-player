@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import ChannelList from './ChannelList'
-import {toggleChannel, fetchImage } from '../actions'
+import {toggleChannel, setChannelWindow, fetchImage } from '../actions'
 
 // Define how state from store gets mapped to
 // props of child component <ChannelList>
@@ -30,6 +30,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchImage: (imageId) => {
       dispatch(fetchImage(imageId))
     },
+
+    setChannelWindow: (index, window, sliding) => {
+      dispatch(setChannelWindow(index, window, sliding))
+    }
   }
 }
 

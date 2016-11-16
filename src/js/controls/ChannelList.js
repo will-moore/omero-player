@@ -32,6 +32,7 @@ class ChannelList extends Component{
               key={channel.id}
               {...channel}
               onClick={() => onChannelClick(channel.id)}
+              setChannelWindow={(window, sliding) => this.props.setChannelWindow(channel.id, window, sliding)}
             />
           )}
         </div>

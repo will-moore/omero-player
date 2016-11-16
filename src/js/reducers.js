@@ -3,7 +3,7 @@ import {TOGGLE_CHANNEL, INCREMENT_Z, INCREMENT_T} from './actions';
 import {CHANNEL_COLOR, TOGGLE_MOVIE} from './actions';
 import {START_FETCHING, RECEIVE_IMAGE, RECEIVE_PLANE, SET_T, SET_Z} from './actions';
 import {incrementT} from './actions';
-import {SET_LAYOUT, SET_ZOOM, Layouts} from './actions';
+import {SET_LAYOUT, SET_ZOOM, SET_CHANNEL_WINDOW, Layouts} from './actions';
 
 // Initial state of the App.
 const initialState = {
@@ -39,6 +39,16 @@ function updateChannels(state = [], action) {
                 if (index === action.index) {
                     return Object.assign({}, channel, {
                         color: action.color
+                    })
+                }
+                return channel;
+            })
+        case SET_CHANNEL_WINDOW:
+            return state.map((channel, index) => {
+                if (index === action.index) {
+                    let newWindow = Object.assign({}, channel.window, action.window)
+                    return Object.assign({}, channel, {
+                        window: newWindow
                     })
                 }
                 return channel;
@@ -116,12 +126,20 @@ export default function playerApp(state = initialState, action) {
             }) 
         // If the action affects channels, handled by channels()
         case TOGGLE_CHANNEL:
+        case SET_CHANNEL_WINDOW:
         case CHANNEL_COLOR:
-            return Object.assign({}, state, {
+            console.log('SLIDING', action.sliding);
+            let s = Object.assign({}, state, {
                 // If rendering has changed, we clear loadedPlanes
-                loadedPlanes: [],
+                // if (!action.sliding) {
+                // loadedPlanes: [],
                 channels: updateChannels(state.channels, action)
-            })
+            });
+            // If rendering has changed (and we're not 'sliding', we clear loadedPlanes
+            if (!action.sliding) {
+                s.loadedPlanes = [];
+            }
+            return s;
         case SET_LAYOUT:
             return Object.assign({}, state, {
                 layout: action.layout

@@ -9,6 +9,7 @@ export const SET_T = "SET_T";
 export const TOGGLE_MOVIE = "TOGGLE_MOVIE";
 export const TOGGLE_CHANNEL = "TOGGLE_CHANNEL";
 export const CHANNEL_COLOR = "CHANNEL_COLOR";
+export const SET_CHANNEL_WINDOW = "SET_CHANNEL_WINDOW";
 export const SET_ZOOM = "SET_ZOOM";
 export const SET_IMAGE = "SET_IMAGE";
 
@@ -60,6 +61,10 @@ export function setZoom(zoom) {
 
 export function toggleChannel(index) {
 	return { type: TOGGLE_CHANNEL, index }
+}
+
+export function setChannelWindow(index, window, sliding=false) {
+	return { type: SET_CHANNEL_WINDOW, index, window, sliding}
 }
 
 export function setChannelColor(index, color) {
