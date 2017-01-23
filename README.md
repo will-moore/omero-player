@@ -12,11 +12,11 @@ rapid scrolling through Z or Time dimensions.
 Uses React.js and Redux.js.
 
 
-$ cd omero_player
-$ npm install
+    $ cd omero_player
+    $ npm install
 
 
-# To generate static/player/bundle.min.js for Django app,
-# and watch for changes:
+To generate static/player/bundle.min.js for Django app,
+and watch for changes:
 
-$ npm run dev
+    $ npm run dev
