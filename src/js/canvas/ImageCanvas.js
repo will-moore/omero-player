@@ -28,6 +28,29 @@ class ImageCanvas extends React.Component {
         this.loadOrDrawPlane();
     }
 
+    // Load the current plane. As part of a batch of stitched planes.
+    loadCurrentPlane() {
+        let batchSize = 5;      // or use 1 to load single plane
+        let theT = this.props.theT,
+            theZ = this.props.theZ;
+        let tStart = theT,
+            tEnd = theT + 1,
+            zStart = theZ,
+            zEnd = theZ + 1;
+        if (this.props.sizeT > 1) {
+            // load planes along T axis...
+            let tSlice = parseInt(theT/batchSize, 10);
+            tStart = batchSize * tSlice;
+            tEnd = Math.min(this.props.sizeT, (tSlice + 1) * batchSize);
+        } else {
+            let zSlice = parseInt(theZ/batchSize, 10);
+            zStart = batchSize * zSlice;
+            zEnd = Math.min(this.props.sizeZ, (zSlice + 1) * batchSize);
+        }
+        this.props.planeManager.loadPlane(this.props.imageId, zStart, zEnd,
+                                          tStart, tEnd, this.props.channels);
+    }
+
     loadOrDrawPlane() {
         console.log("loadOrDrawPlane...")
         // If we have image data loaded...
@@ -41,8 +64,7 @@ class ImageCanvas extends React.Component {
                     // but if we're sliding Z/T sliders, don't load plane that's not loaded
                     return;
                 }
-                this.props.planeManager.loadPlane(this.props.imageId, this.props.theZ,
-                                                  this.props.theT, this.props.channels);
+                this.loadCurrentPlane();
                 return;
             } else {
                 // ...otherwise, plane is loaded, we can get it and draw on canvas
@@ -50,7 +72,9 @@ class ImageCanvas extends React.Component {
                                                                        this.props.theT);
                 if (source) {
                     img = source.img;
-                    this.updateCanvas(img);
+                    // planes stitched across x axis
+                    let xOffset = source.x * this.props.sizeX;
+                    this.updateCanvas(img, xOffset);
                 } else {
                     console.log("NOT FOUND", this.props.theZ, this.props.theT);
                     return;
@@ -59,7 +83,7 @@ class ImageCanvas extends React.Component {
         }
     }
 
-    updateCanvas(img) {
+    updateCanvas(img, srcX) {
         const canvas = this.refs.canvas;
         if (!canvas) return;
 
@@ -71,12 +95,12 @@ class ImageCanvas extends React.Component {
         ctx.fillStyle = "rgb(150,150,150)";
         ctx.fillRect(0,0, canvas.width, canvas.height);
 
-        let imgWidth = img.width * this.props.zoom/100
+        let imgWidth = this.props.sizeX * this.props.zoom/100
         let imgHeight = img.height * this.props.zoom/100
         if (img) {
             const xOffset = ((canvas.width - imgWidth) / 2) + this.state.dx;
             const yOffset = ((canvas.height - imgHeight) / 2) + this.state.dy;
-            ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, yOffset, imgWidth, imgHeight);
+            ctx.drawImage(img, srcX, 0, this.props.sizeX, img.height, xOffset, yOffset, imgWidth, imgHeight);
         }
     }
 

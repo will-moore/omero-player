@@ -68,13 +68,18 @@ export default function playerApp(state = initialState, action) {
                 isFetching: true
             })
         case RECEIVE_PLANE:
-            const key = `${ action.theZ },${ action.theT }`;
+            let loadedPlanes = state.loadedPlanes;
+            for (let z=action.zStart; z<action.zEnd; z++) {
+                for (let t=action.tStart; t<action.tEnd; t++) {
+                    const key = `${ z },${ t }`;
+                    // If key is already in list, return list else return list with key
+                    loadedPlanes = loadedPlanes.indexOf(key) > -1 ? loadedPlanes : [...loadedPlanes, key]
+                }
+            }
+            console.log("LOADED_PLANES", loadedPlanes);
             return Object.assign({}, state, {
+                loadedPlanes,
                 isFetching: false,
-                // If key is already in list, return list else return list with key
-                loadedPlanes: state.loadedPlanes.indexOf(key) > -1 ? state.loadedPlanes : [
-                    ...state.loadedPlanes, key
-                ]
             })
         case RECEIVE_IMAGE:
             let json = action.json;

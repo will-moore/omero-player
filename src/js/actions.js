@@ -79,8 +79,8 @@ export function startFetching() {
 	return { type: START_FETCHING }
 }
 
-export function recievePlane(theZ, theT) {
-	return { type: RECEIVE_PLANE, theZ, theT }
+export function recievePlane(zStart, zEnd, tStart, tEnd) {
+	return { type: RECEIVE_PLANE, zStart, zEnd, tStart, tEnd }
 }
 
 export function receiveImage(json) {

@@ -19,12 +19,12 @@ const PlaneManager = function(dispatch) {
             imageLoaders = [];
         },
 
-        loadPlane: (iid, z, t, channels) => {
+        loadPlane: (iid, zStart, zEnd, tStart, tEnd, channels) => {
             // set 'isFetching' to true...
             dispatch(startFetching());
             // Create a new loader, callback updates the store
-            const loader = new ImageLoader(iid, z, t, channels, function(){
-                dispatch(recievePlane(z, t));
+            const loader = new ImageLoader(iid, zStart, zEnd, tStart, tEnd, channels, function(){
+                dispatch(recievePlane(zStart, zEnd, tStart, tEnd));
             });
             // Add loader to list, so we can use it to get plane later
             imageLoaders.push(loader);

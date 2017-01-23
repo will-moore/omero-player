@@ -2,7 +2,7 @@
 
 // const ImageLoader = function(imageId, baseUrl, sizeX, sizeY, zStart, zStop, tStart, tStop, callback, rdef) {
 
-const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
+const ImageLoader = function(imageId, zStart, zEnd, tStart, tEnd, channels, callback) {
 
     const img = new Image();
 
@@ -22,7 +22,7 @@ const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
     }
 
     var getSrcUrl = function() {
-        let url = `/webgateway/render_image/${ imageId }/${ zStart }/${ tStart }/`
+        let url = `/player/render_stitched_image/${ imageId }/?z=${ zStart }-${ zEnd }&t=${ tStart }-${ tEnd }`
         // if (zStop !== zStart) {
         //     url += '-' + zStop;
         // }    
@@ -30,7 +30,7 @@ const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
         // if (tStart !== tStop) {
         //     url += '-' + tStop;
         // }
-        url += '?c=' + getQuery();
+        url += '&c=' + getQuery();
         return url;
     };
 
@@ -50,11 +50,10 @@ const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
         if (status !== "loaded") {
             return;
         }
-        // var offset = (theZ - zStart) + (theT - tStart); 
+        var offset = (theZ - zStart) + (theT - tStart); 
         // image is simply a row of planes - offset is sizeX * offset
         return {'img':img,
-                // 'x': offset * sizeX,
-                'x': 0,
+                'x': offset,
                 'y': 0,
                 'width': img.width,
                 'height': img.height,
@@ -62,10 +61,10 @@ const ImageLoader = function(imageId, zStart, tStart, channels, callback) {
     };
 
     this.containsPlane = function(z, t) {
-        if (z != zStart) return false;
-        // if (z > zStop) return false;
-        if (t != tStart) return false;
-        // if (t > tStop) return false;
+        if (z < zStart) return false;
+        if (z >= zEnd) return false;
+        if (t < tStart) return false;
+        if (t >= tEnd) return false;
         return true;
     };
 
