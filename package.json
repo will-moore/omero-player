@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
-    "dev": "node_modules/.bin/webpack --config webpack.config.js --watch"
+    "dev": "node_modules/.bin/webpack --config webpack.config.js --watch",
+    "debug": "node_modules/.bin/webpack --config webpack.config.js"
   },
   "author": "William Moore",
   "license": "GPL-3.0",

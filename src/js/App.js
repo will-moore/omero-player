@@ -15,6 +15,7 @@ const App = ({ params, planeManager }) => (
     <div>
         <PlayerNav></PlayerNav>
 
+        <GridContainer planeManager={planeManager} />
         <ImageCanvasContainer planeManager={planeManager} />
         <RightPanel
             imageId = {params.imageId}

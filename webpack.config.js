@@ -26,7 +26,7 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + "/player/static/player",
+    path: __dirname + "/omero_player/static/player",
     filename: "bundle.min.js"
   },
   plugins: debug ? [] : [
