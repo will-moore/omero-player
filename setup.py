@@ -41,7 +41,7 @@ class NpmInstall(Command):
 cmdclass['npm_install'] = NpmInstall
 
 
-class Grunt(Command):
+class Webpack(Command):
 
     sub_commands = [
         ('npm_install', None)
@@ -59,17 +59,18 @@ class Grunt(Command):
         for command in self.get_sub_commands():
             self.run_command(command)
 
+        # npm script builds with webpack
         self.spawn(['npm', 'run', 'debug'])
 
 
-cmdclass['grunt'] = Grunt
+cmdclass['webpack'] = Webpack
 
 
 class Sdist(setuptools.command.sdist.sdist):
 
     def run(self):
         if os.path.isdir('src'):
-            self.run_command('grunt')
+            self.run_command('webpack')
         setuptools.command.sdist.sdist.run(self)
 
 
@@ -80,7 +81,7 @@ class Install(setuptools.command.install.install):
 
     def run(self):
         if os.path.isdir('src'):
-            self.run_command('grunt')
+            self.run_command('webpack')
         setuptools.command.install.install.run(self)
 
 
