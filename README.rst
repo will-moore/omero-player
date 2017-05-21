@@ -28,7 +28,7 @@ Add to the list of OMERO.web apps::
 
 Optionally add to the 'Open with' menu options, to open images in OMERO.player from webclient::
 
-	$ bin/omero config append '["omero_player", "player_index",
+	$ bin/omero config append omero.web.open_with '["omero_player", "player_index",
 	  {"supported_objects": ["image"], "script_url": "player/openwith.js", "label": "OMERO.player"}]'
 
 

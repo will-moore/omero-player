@@ -167,5 +167,8 @@
     <div id='root'>
     </div>
     <script src="{% static 'player/bundle.min.js' %}"></script>
+    <script>
+      omeroPlayerApp("{% url 'player_index' %}");
+    </script>
   </body>
 </html>

@@ -19,12 +19,17 @@ let store = createStore(
     )
 );
 
-// We pass imageId as a prop of App component
-ReactDOM.render(
-    <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/player/image/(:imageId)/" component={App} />
-        </Router>
-    </Provider>,
-    document.getElementById('root')
-);
+// Global function to init app with baseUrl from Django
+window.omeroPlayerApp = (baseUrl) => {
+    const imagePath = baseUrl + "image/(:imageId)/";
+    console.log(imagePath)
+    // We pass imageId as a prop of App component
+    ReactDOM.render(
+        <Provider store={store}>
+            <Router history={browserHistory}>
+                <Route path={imagePath} component={App} />
+            </Router>
+        </Provider>,
+        document.getElementById('root')
+    );
+}
