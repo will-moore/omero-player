@@ -91,7 +91,7 @@ export function receiveImage(json) {
 export function fetchImage(imageId) {
 	return function (dispatch) {
 		dispatch(startFetching())
-		return axios.get('/webgateway/imgData/' + imageId + '/')
+		return axios.get(window.WEBGATEWAY_INDEX + 'imgData/' + imageId + '/')
 			.then(response => response.data)
 			.then(json => 
 				dispatch(receiveImage(json))

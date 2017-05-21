@@ -22,7 +22,7 @@ const ImageLoader = function(imageId, zStart, zEnd, tStart, tEnd, channels, call
     }
 
     var getSrcUrl = function() {
-        let url = `/player/render_stitched_image/${ imageId }/?z=${ zStart }-${ zEnd }&t=${ tStart }-${ tEnd }`
+        let url = window.PLAYER_INDEX + `render_stitched_image/${ imageId }/?z=${ zStart }-${ zEnd }&t=${ tStart }-${ tEnd }`
         // if (zStop !== zStart) {
         //     url += '-' + zStop;
         // }    
