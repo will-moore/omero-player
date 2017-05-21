@@ -2,3 +2,6 @@
 .DS_Store
 /player/static/player/bundle.min.js
 *.pyc
+/dist/
+/omero_player.egg-info/
+/omero_player/static/player/bundle.min.js
