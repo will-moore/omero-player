@@ -17,9 +17,9 @@ Installation
 
 Requires OMERO.web framework.
 
-Installation via pip::
+Installation via pip, currently via testpypi::
 
-	$ pip install -U git+git://github.com/will-moore/omero-player.git@master#egg=player
+	$ pip install -i https://testpypi.python.org/pypi omero-player
 
 
 Add to the list of OMERO.web apps::
